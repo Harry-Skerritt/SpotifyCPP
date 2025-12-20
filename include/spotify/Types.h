@@ -54,12 +54,25 @@ namespace Spotify {
     // Todo: See if any other forward declarations can be made for readability
     struct EpisodeObject;
     struct TrackObject;
+    struct ArtistObject;
+    struct AlbumObject;
+
+    template <typename T>
+    struct PagingObject {
+        std::string href;
+        int limit{};
+        std::optional<std::string> next;
+        int offset{};
+        std::optional<std::string> prev;
+        int total{};
+        std::vector<T> items;
+    };
 
     // --- 'Base' Objects
     struct ImageObject {
         std::string url;
-        int height;
-        int width;
+        std::optional<int> height;
+        std::optional<int> width;
     };
 
     struct CopyrightObject {
@@ -90,7 +103,7 @@ namespace Spotify {
     };
 
     struct FollowersObject {
-        std::string href;
+        std::optional<std::string> href;
         int total;
     };
 
@@ -123,13 +136,13 @@ namespace Spotify {
     };
 
     struct DeviceObject {
-        std::string id;
+        std::optional<std::string> id;
         bool is_active;
         bool is_private_session;
         bool is_restricted;
         std::string name;
         std::string type;
-        int volume_percent;
+        std::optional<int> volume_percent;
         bool supports_volume;
     };
 
@@ -172,7 +185,7 @@ namespace Spotify {
         std::string id;
         std::string type;
         std::string uri;
-        std::string display_name;
+        std::optional<std::string> display_name;
     };
 
     struct TrackCollectionObject {
@@ -204,7 +217,7 @@ namespace Spotify {
         LinkedFromObject linked_from;
         RestrictionsObject restrictions;
         std::string name;
-        std::string preview_url; // Dep
+        std::optional<std::string> preview_url; // Dep
         int track_number;
         std::string type;
         std::string uri;
@@ -212,7 +225,7 @@ namespace Spotify {
     };
 
     struct SimplifiedChapterObject {
-        std::string audio_preview_url; // Dep
+        std::optional<std::string> audio_preview_url; // Dep
         std::vector<std::string> available_markets;
         int chapter_number;
         std::string description;
@@ -257,7 +270,7 @@ namespace Spotify {
     };
 
     struct SimplifiedEpisodeObject {
-        std::string audio_preview_url; // Dep
+        std::optional<std::string> audio_preview_url; // Dep
         std::string description;
         std::string html_description;
         int duration_ms;
@@ -333,37 +346,7 @@ namespace Spotify {
     };
 
 
-    // -- Linked List Objects --
-    struct LinkedTracksObject {
-        std::string href;
-        int limit;
-        std::string next;
-        int offset;
-        std::string previous;
-        int total;
-        std::vector<SimplifiedTrackObject> items;
-    };
-
-    struct LinkedChaptersObject {
-        std::string href;
-        int limit;
-        std::string next;
-        int offset;
-        std::string previous;
-        int total;
-        std::vector<SimplifiedChapterObject> items;
-    };
-
-    struct LinkedEpisodesObject {
-        std::string href;
-        int limit;
-        std::string next;
-        int offset;
-        std::string previous;
-        int total;
-        std::vector<SimplifiedEpisodeObject> items;
-    };
-
+    // -- Linked Objects --
     struct PlaylistTrackObject {
         std::string added_at;
         AddedByObject added_by;
@@ -371,16 +354,10 @@ namespace Spotify {
         std::variant<TrackObject, EpisodeObject> track;
     };
 
-    struct LinkedPlaylistTracksObject {
-        std::string href;
-        int limit;
-        std::string next;
-        int offset;
-        std::string previous;
-        int total;
-        std::vector<PlaylistTrackObject> items;
-    };
-
+    using LinkedTracksObject = PagingObject<SimplifiedTrackObject>;
+    using LinkedChaptersObject = PagingObject<SimplifiedChapterObject>;
+    using LinkedEpisodesObject = PagingObject<SimplifiedEpisodeObject>;
+    using LinkedPlaylistTracksObject = PagingObject<PlaylistTrackObject>;
 
 
     // --- 'Main' Response Objects --
@@ -435,7 +412,7 @@ namespace Spotify {
         RestrictionsObject restrictions;
         std::string name;
         int popularity;
-        std::string preview_url; // Dep
+        std::optional<std::string> preview_url; // Dep
         int track_number;
         std::string type;
         std::string uri;
@@ -466,7 +443,7 @@ namespace Spotify {
     };
 
     struct ChapterObject {
-        std::string audio_preview_url; // Dep
+        std::optional<std::string> audio_preview_url; // Dep
         std::vector<std::string> available_markets;
         int chapter_number;
         std::string description;
@@ -490,7 +467,7 @@ namespace Spotify {
     };
 
     struct EpisodeObject {
-        std::string audio_preview_url; // Dep
+        std::optional<std::string> audio_preview_url; // Dep
         std::string description;
         std::string html_description;
         int duration_ms;
@@ -550,7 +527,7 @@ namespace Spotify {
 
     struct PlaylistObject {
         bool collaborative;
-        std::string description;
+        std::optional<std::string> description;
         ExternalURL external_urls;
         std::string href;
         std::string id;
@@ -580,86 +557,24 @@ namespace Spotify {
     };
 
 
-    // --- Search ---
-    struct SearchTrackObject {
-        std::string href;
-        int limit;
-        std::string next;
-        int offset;
-        std::string previous;
-        int total;
-        std::vector<TrackObject> items;
-    };
+    // --- Search --
+    using SearchTrackObject = PagingObject<TrackObject>;
+    using SearchArtistObject = PagingObject<ArtistObject>;
+    using SearchAlbumObject = PagingObject<SimplifiedAlbumObject>;
+    using SearchPlaylistObject = PagingObject<SimplifiedPlaylistObject>;
+    using SearchShowsObject = PagingObject<SimplifiedShowObject>;
+    using SearchEpisodesObject = PagingObject<SimplifiedEpisodeObject>;
+    using SearchAudioBookObject = PagingObject<SimplifiedAudioBookObject>;
 
-    struct SearchArtistObject {
-        std::string href;
-        int limit;
-        std::string next;
-        int offset;
-        std::string previous;
-        int total;
-        std::vector<ArtistObject> items;
-    };
-
-    struct SearchAlbumObject {
-        std::string href;
-        int limit;
-        std::string next;
-        int offset;
-        std::string previous;
-        int total;
-        std::vector<SimplifiedAlbumObject> items;
-    };
-
-    struct SearchPlaylistObject {
-        std::string href;
-        int limit;
-        std::string next;
-        int offset;
-        std::string previous;
-        int total;
-        std::vector<SimplifiedPlaylistObject> items;
-    };
-
-    struct SearchShowsObject {
-        std::string href;
-        int limit;
-        std::string next;
-        int offset;
-        std::string previous;
-        int total;
-        std::vector<SimplifiedShowObject> items;
-    };
-
-    struct SearchEpisodesObject {
-        std::string href;
-        int limit;
-        std::string next;
-        int offset;
-        std::string previous;
-        int total;
-        std::vector<SimplifiedEpisodeObject> items;
-    };
-
-    struct SearchAudioBookObject {
-        std::string href;
-        int limit;
-        std::string next;
-        int offset;
-        std::string previous;
-        int total;
-        std::vector<SimplifiedAudioBookObject> items;
-    };
     struct SearchObject {
-        SearchTrackObject tracks;
-        SearchArtistObject artists;
-        SearchAlbumObject albums;
-        SearchPlaylistObject playlists;
-        SearchShowsObject shows;
-        SearchEpisodesObject episodes;
-        SearchAudioBookObject audiobook;
+        std::optional<SearchTrackObject> tracks;
+        std::optional<SearchArtistObject> artists;
+        std::optional<SearchAlbumObject> albums;
+        std::optional<SearchPlaylistObject> playlists;
+        std::optional<SearchShowsObject> shows;
+        std::optional<SearchEpisodesObject> episodes;
+        std::optional<SearchAudioBookObject> audiobook;
     };
-
 
 }
 
