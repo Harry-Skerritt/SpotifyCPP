@@ -20,6 +20,7 @@ namespace Spotify::WebTools {
     std::string urlEncode(const std::string &value);
     std::string extractValue(const std::string &json, const std::string &key);
     int extractIntValue(const std::string &json, const std::string &key);
+    std::string getHttpStatusText(int code);
 }
 
 namespace Spotify::Tools {

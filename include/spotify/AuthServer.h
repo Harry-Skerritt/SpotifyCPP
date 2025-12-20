@@ -9,6 +9,8 @@
 #include <string>
 #include <fstream>
 #include <sstream>
+#include <cstdlib>
+#include <iostream>
 
 namespace Spotify {
     class AuthServer {

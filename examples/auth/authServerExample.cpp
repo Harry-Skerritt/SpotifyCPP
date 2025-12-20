@@ -32,8 +32,8 @@ int main() {
     // Open the url in the browser
     Spotify::AuthServer::openBrowser(url);
 
-    // Get the code and pass to the code
-    std::string code = Spotify::AuthServer::waitForCode("127.0.0.1", 8888);
+    // Get the code and pass to the code;
+    std::string code = Spotify::AuthServer::waitForCode("127.0.0.1", 8888, "index.html");
 
     // Get the auth token from the code
     if(!code.empty()) {
@@ -46,6 +46,7 @@ int main() {
         }
     }
 
+    /*
     std::cout << "Type anything to refresh token: ";
     std::string input;
     std::getline(std::cin, input);
@@ -60,6 +61,7 @@ int main() {
         std::cout << "Re-Authorization failed with code: " << Spotify::Tools::stringifyResponse(refresh_response.response_code) << std::endl;
         return 1;
     }
+    */
 
     return 0;
 }

@@ -4,6 +4,7 @@
 
 #include "spotify/Tools.hpp"
 
+// --- WEB TOOLS ---
 std::string Spotify::WebTools::generateRandomState(size_t length) {
     std::random_device rd;
     std::mt19937 gen(rd());
@@ -63,6 +64,17 @@ int Spotify::WebTools::extractIntValue(const std::string &json, const std::strin
     }
 }
 
+std::string Spotify::WebTools::getHttpStatusText(int code)
+
+{
+    auto it = RFC2616_Table.find(code);
+    if (it != RFC2616_Table.end()) {
+        return it->second;
+    }
+    return "Unknown Status (" + std::to_string(code) + ")";
+}
+
+// --- TOOLS ---
 void Spotify::Tools::loadEnv(const std::string& filename) {
     std::ifstream file(filename);
     if (!file.is_open()) return;

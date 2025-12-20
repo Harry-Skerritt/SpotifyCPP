@@ -2,9 +2,8 @@
 // Created by Harry Skerritt on 18/12/2025.
 //
 
-#include <iostream>
 #include "spotify/Auth.hpp"
-#include "spotify/base64.hpp"
+
 
 // CURL Helper
 static size_t WriteCallback(void* contents, size_t size, size_t nmemb, void* userp) {
@@ -111,9 +110,11 @@ Spotify::AuthResponse Spotify::Auth::getAuthToken(const std::string &code) {
     curl_global_cleanup();
 #endif
 
+
     // API bad response
     if (http_code != 200) {
         response.response_code = AUTH_ERROR;
+        std::cerr << http_code << ": " << WebTools::getHttpStatusText(http_code) << std::endl;
         return response;
     }
 

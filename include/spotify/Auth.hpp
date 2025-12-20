@@ -11,10 +11,12 @@
 #include <sstream>
 #include <iomanip>
 #include <iostream>
+
 #include <curl/curl.h>
 
 #include "spotify/Tools.hpp"
 #include "spotify/Types.h"
+#include "spotify/base64.hpp"
 
 
 namespace Spotify {
@@ -23,7 +25,7 @@ namespace Spotify {
         // Funcs
         public:
         Auth(Client keys );
-        ~Auth() = default; // Todo: for now
+        ~Auth() = default;
 
         std::string getAuthURL(
             const std::string &redirectUri,

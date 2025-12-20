@@ -2,10 +2,10 @@
 // Created by Harry Skerritt on 20/12/2025.
 //
 
-#include "spotify/AuthServer.h"
 #include "httplib.h"
-#include <cstdlib>
-#include <iostream>
+
+#include "spotify/AuthServer.h"
+
 
 void Spotify::AuthServer::openBrowser(const std::string &url) {
 #if defined(_WIN32)
