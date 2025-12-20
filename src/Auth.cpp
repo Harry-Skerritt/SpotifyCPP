@@ -3,8 +3,7 @@
 //
 
 #include <iostream>
-#include <spotify/Auth.hpp>
-
+#include "spotify/Auth.hpp"
 #include "spotify/base64.hpp"
 
 // CURL Helper
@@ -43,7 +42,7 @@ std::string Spotify::Auth::getAuthURL(
     << "&redirect_uri=" << WebTools::urlEncode(redirect_uri)
     << "&state=" << WebTools::urlEncode(actual_state);
 
-    std::string auth_url = " https://accounts.spotify.com/authorize?"+ oss.str();
+    std::string auth_url = "https://accounts.spotify.com/authorize?"+ oss.str();
 
     return auth_url;
 }

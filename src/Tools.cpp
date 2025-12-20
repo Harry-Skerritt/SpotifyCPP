@@ -2,7 +2,6 @@
 // Created by Harry Skerritt on 20/12/2025.
 //
 
-
 #include "spotify/Tools.hpp"
 
 std::string Spotify::WebTools::generateRandomState(size_t length) {

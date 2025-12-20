@@ -4,6 +4,7 @@
 
 #include <spotify/Auth.hpp>
 #include <spotify/Tools.hpp>
+#include <spotify/AuthServer.h>
 #include <cstdlib>
 
 int main() {
@@ -32,18 +33,21 @@ int main() {
     // Display URL
     std::cout << "Please visit the following url: " << url << std::endl;
 
+
     // Allow the user to enter the code
     std::cout << "Enter code from url: ";
     std::string code;
     std::getline(std::cin, code);
 
     // Get the auth token from the code
-    Spotify::AuthResponse response = auth_client.getAuthToken(code);
-    if (response.response_code == Spotify::SUCCESS) {
-        std::cout << "Authorization successful" << std::endl;
-    } else {
-        std::cout << "Authorization failed with code: " << Spotify::Tools::stringifyResponse(response.response_code) << std::endl;
-        return 1;
+    if(!code.empty()) {
+        Spotify::AuthResponse response = auth_client.getAuthToken(code);
+        if (response.response_code == Spotify::SUCCESS) {
+            std::cout << "Authorization successful" << std::endl;
+        } else {
+            std::cout << "Authorization failed with code: " << Spotify::Tools::stringifyResponse(response.response_code) << std::endl;
+            return 1;
+        }
     }
 
     std::cout << "Type anything to refresh token: ";
@@ -60,11 +64,6 @@ int main() {
         std::cout << "Re-Authorization failed with code: " << Spotify::Tools::stringifyResponse(refresh_response.response_code) << std::endl;
         return 1;
     }
-
-
-
-
-
 
     return 0;
 }

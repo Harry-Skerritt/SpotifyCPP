@@ -13,8 +13,8 @@
 #include <iostream>
 #include <curl/curl.h>
 
-#include <spotify/Tools.hpp>
-#include <spotify/Types.h>
+#include "spotify/Tools.hpp"
+#include "spotify/Types.h"
 
 
 namespace Spotify {
