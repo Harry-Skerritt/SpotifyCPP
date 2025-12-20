@@ -13,7 +13,7 @@
 #include <iostream>
 #include <fstream>
 
-#include "Auth.hpp"
+#include <spotify/Types.h>
 
 namespace Spotify::WebTools {
     std::string generateRandomState(size_t length = 16);

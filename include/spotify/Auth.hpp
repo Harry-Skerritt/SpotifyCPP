@@ -14,35 +14,15 @@
 #include <curl/curl.h>
 
 #include <spotify/Tools.hpp>
+#include <spotify/Types.h>
 
 
 namespace Spotify {
 
-    enum ResponseCode {
-        SUCCESS,
-        NETWORK_ERROR,
-        AUTH_ERROR,
-        PARSE_ERROR
-    };
-
-    struct ClientKeys {
-        std::string client_id;
-        std::string client_secret;
-    };
-
-    struct AuthResponse {
-        std::string access_token;
-        std::string token_type;
-        std::string scope;
-        int expires_in = 0;
-        std::string refresh_token;
-        ResponseCode response_code;
-    };
-
     class Auth {
         // Funcs
         public:
-        Auth(ClientKeys keys );
+        Auth(Client keys );
         ~Auth() = default; // Todo: for now
 
         std::string getAuthURL(
@@ -52,14 +32,18 @@ namespace Spotify {
 
         AuthResponse getAuthToken(const std::string &code);
 
-        private:
+        AuthResponse refreshAuthToken(const std::optional<std::string>& refresh_token = std::nullopt);
 
+        private:
+        AuthResponse buildAuthResponse(const std::string& json);
+        [[nodiscard]] std::string encodeClientCreds() const;
 
         // Vars
         public:
         private:
-        ClientKeys m_keys;
+        Client m_keys;
         std::string m_redirectUri;
+        std::string m_refresh_token;
     };
 }
 
