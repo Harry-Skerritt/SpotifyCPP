@@ -7,7 +7,8 @@ set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 # Library
 add_library(SpotifyAPILib STATIC
-        src/auth.cpp
+        src/Auth.cpp
+        src/Tools.cpp
 )
 
 target_include_directories(SpotifyAPILib PUBLIC include)

@@ -3,30 +3,15 @@
 //
 
 #include <spotify/Auth.hpp>
+#include <spotify/Tools.hpp>
 #include <cstdlib>
-#include <fstream>
 
-
-void loadEnv(const std::string& filename = ".env") {
-    std::ifstream file(filename);
-    if (!file.is_open()) return;
-
-    std::string line;
-    while (std::getline(file, line)) {
-        if (line.empty() || line[0] == '#') continue;
-        auto pos = line.find('=');
-        if (pos == std::string::npos) continue;
-
-        std::string key = line.substr(0, pos);
-        std::string value = line.substr(pos + 1);
-
-        setenv(key.c_str(), value.c_str(), 1); // overwrite if exists
-    }
-}
+#include "spotify/Tools.hpp"
 
 int main() {
 
-    loadEnv("/Volumes/Data/Code/C++/2025/SpotifyAPILib/.env");
+    // Getting client values from .env
+    Spotify::Tools::loadEnv("/Volumes/Data/Code/C++/2025/SpotifyAPILib/.env");
     const char* client_key = std::getenv("SPOTIFY_CLIENT_KEY");
     const char* client_secret = std::getenv("SPOTIFY_CLIENT_SECRET");
 
@@ -35,13 +20,35 @@ int main() {
         return 1;
     }
 
+    // Creating the client
     Spotify::Auth client({client_key, client_secret});
 
+    // Generate the auth url
     auto url = client.getAuthURL(
     "http://127.0.0.1:8888/callback",
     {"user-read-private", "user-read-email"});
 
+    // Display URL
+    std::cout << "Please visit the following url: ";
     std::cout << url << std::endl;
+
+
+    // Allow the user to enter the code
+    std::cout << "Enter code from url: ";
+    std::string code;
+    std::getline(std::cin, code);
+
+    // Get the auth token from the code
+    Spotify::AuthResponse response = client.getAuthToken(code);
+    if (response.response_code == Spotify::SUCCESS) {
+        std::cout << "Authorization successful" << std::endl;
+    } else {
+        std::cout << "Authorization failed with code: " << Spotify::Tools::stringifyResponse(response.response_code) << std::endl;
+    }
+
+
+
+
 
     return 0;
 }
