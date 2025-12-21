@@ -352,7 +352,7 @@ namespace Spotify {
         std::string added_at;
         AddedByObject added_by;
         bool is_local;
-        std::variant<TrackObject, EpisodeObject> track;
+        std::variant<std::shared_ptr<TrackObject>, std::shared_ptr<EpisodeObject>> track;
     };
 
     using LinkedTracksObject = PagingObject<SimplifiedTrackObject>;
@@ -520,7 +520,7 @@ namespace Spotify {
         int timestamp;
         int progress_ms;
         bool is_playing;
-        std::variant<TrackObject, EpisodeObject> episode;
+        std::variant<std::shared_ptr<TrackObject>, std::shared_ptr<EpisodeObject>> episode;
         std::string currently_playing_type;
         ActionsObject actions;
     };

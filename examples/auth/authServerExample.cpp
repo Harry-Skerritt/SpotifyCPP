@@ -41,7 +41,7 @@ int main() {
         if (auth_client.exchangeCode(code)) {
             std::cout << "Authorization successful" << std::endl;
         } else {
-            std::cout << "Authorization failed with code: " << Spotify::Tools::stringifyResponse(response.response_code) << std::endl;
+            std::cout << "Authorization failed with code: " << Spotify::Tools::stringifyResponse(auth_client.getError()) << std::endl;
             return 1;
         }
     }
