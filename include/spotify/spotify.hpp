@@ -18,11 +18,13 @@
 // Core
 #include "spotify/core/Client.hpp"
 
+/*
 // Utils
 #include "spotify/util/base64.hpp"
 #include "spotify/util/Http.hpp"
 #include "spotify/util/JsonMapping.hpp"
 #include "spotify/util/Tools.hpp"
 #include "spotify/util/Types.h"
+*/
 
 #endif //SPOTIFY_HPP

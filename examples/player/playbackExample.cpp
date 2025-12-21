@@ -11,10 +11,6 @@ int main () {
     auto auth = Spotify::ExampleUtils::authenticateFromEnv();
     Spotify::Client client(auth);
 
-    //client.player().pausePlayback();
-    client.player().seekToPosition(25000);
-
-    /*
     auto devices = client.player().getAvailableDevices();
 
     if (!devices.has_value()) {
@@ -37,6 +33,6 @@ int main () {
     }
 
     std::cout << "There are " << queue->queue.size() << " item(s) in queue" << std::endl;
-*/
+
 
 }
