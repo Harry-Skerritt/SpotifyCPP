@@ -4,10 +4,10 @@
 
 #include "httplib.h"
 
-#include "spotify/auth/AuthServer.h"
+#include "spotify/auth/AuthServer.hpp"
 
 namespace Spotify {
-    void Spotify::AuthServer::openBrowser(const std::string &url) {
+    void AuthServer::openBrowser(const std::string &url) {
 #if defined(_WIN32)
         std::string command = "start " + url;
 #elif defined(__APPLE__)
@@ -18,7 +18,7 @@ namespace Spotify {
         std::system(command.c_str());
     }
 
-    std::string Spotify::AuthServer::waitForCode(const std::string &auth_url, int port, const std::optional<std::filesystem::path> &html_file_path) {
+    std::string AuthServer::waitForCode(const std::string &auth_url, int port, const std::optional<std::filesystem::path> &html_file_path) {
         httplib::Server server;
         std::string captured_code;
 

@@ -1,11 +1,9 @@
 #include "spotify/auth/Auth.hpp"
-#include "spotify/auth/AuthServer.h"
+#include "spotify/auth/AuthServer.hpp"
 #ifndef EXAMPLE_UTILS_H
 #define EXAMPLE_UTILS_H
 
-#include <spotify/auth/Auth.hpp>
-#include <spotify/auth/AuthServer.h>
-#include <spotify/util/Tools.hpp>
+#include <spotify/spotify.hpp>
 #include <iostream>
 #include <cstdlib>
 
