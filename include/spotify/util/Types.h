@@ -522,10 +522,10 @@ namespace Spotify {
         std::string repeat_state;
         bool shuffle_state;
         ContextObject context;
-        int timestamp;
+        long long timestamp;
         int progress_ms;
         bool is_playing;
-        std::variant<std::shared_ptr<TrackObject>, std::shared_ptr<EpisodeObject>> episode;
+        std::variant<std::shared_ptr<TrackObject>, std::shared_ptr<EpisodeObject>> item;
         std::string currently_playing_type;
         ActionsObject actions;
     };

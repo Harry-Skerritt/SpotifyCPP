@@ -196,7 +196,7 @@ namespace Spotify {
         c.languages = j.value("languages", std::vector<std::string>{});
         c.name = j.value("name", "");
         c.release_date = j.value("release_date", "");
-        c.release_date_precision = j.value("release_date_precision", 0);
+        c.release_date_precision = j.value("release_date_precision", "");
         map_object(j, "resume_point", c.resume_point);
         c.type = j.value("type", "");
         c.uri = j.value("uri", "");
@@ -241,7 +241,7 @@ namespace Spotify {
         e.languages = j.value("languages", std::vector<std::string>{});
         e.name = j.value("name", "");
         e.release_date = j.value("release_date", "");
-        e.release_date_precision = j.value("release_date_precision", 0);
+        e.release_date_precision = j.value("release_date_precision", "");
         map_object(j, "resume_point", e.resume_point);
         e.type = j.value("type", "");
         e.uri = j.value("uri", "");
@@ -294,7 +294,7 @@ namespace Spotify {
         a.images = j.value("images", std::vector<ImageObject>{});
         a.name = j.value("name", "");
         a.release_date = j.value("release_date", "");
-        a.release_date_precision = j.value("release_date_precision", 0);
+        a.release_date_precision = j.value("release_date_precision", "");
         map_object(j, "restrictions", a.restrictions);
         a.type = j.value("type", "");
         a.uri = j.value("uri", "");
@@ -349,7 +349,7 @@ namespace Spotify {
         a.images = j.value("images", std::vector<ImageObject>{});
         a.name = j.value("name", "");
         a.release_date = j.value("release_date", "");
-        a.release_date_precision = j.value("release_date_precision", 0);
+        a.release_date_precision = j.value("release_date_precision", "");
         map_object(j, "restrictions", a.restrictions);
         a.type = j.value("type", "");
         a.uri = j.value("uri", "");
@@ -402,7 +402,7 @@ namespace Spotify {
         a.available_markets = j.value("available_markets", std::vector<std::string>{});
         a.copyrights = j.value("copyrights", std::vector<CopyrightObject>{});
         a.description = j.value("description", "");
-        a.html_description = j.value("html_description", std::vector<std::string>{});
+        a.html_description = j.value("html_description", "");
         a.edition = j.value("edition", "");
         a.is_explicit = j.value("explicit", false);
         map_object(j, "external_urls", a.external_urls);
@@ -436,7 +436,7 @@ namespace Spotify {
         c.languages = j.value("languages", std::vector<std::string>{});
         c.name = j.value("name", "");
         c.release_date = j.value("release_date", "");
-        c.release_date_precision = j.value("release_date_precision", 0);
+        c.release_date_precision = j.value("release_date_precision", "");
         map_object(j, "resume_point", c.resume_point);
         c.type = j.value("type", "");
         c.uri = j.value("uri", "");
@@ -460,7 +460,7 @@ namespace Spotify {
         e.languages = j.value("languages", std::vector<std::string>{});
         e.name = j.value("name", "");
         e.release_date = j.value("release_date", "");
-        e.release_date_precision = j.value("release_date_precision", 0);
+        e.release_date_precision = j.value("release_date_precision", "");
         map_object(j, "resume_point", e.resume_point);
         e.type = j.value("type", "");
         e.uri = j.value("uri", "");
@@ -494,7 +494,7 @@ namespace Spotify {
         p.repeat_state = j.value("repeat_state", "");
         p.shuffle_state = j.value("shuffle_state", false);
         map_object(j, "context", p.context);
-        p.timestamp = j.value("timestamp", 0);
+        p.timestamp = j.value("timestamp", 0LL);
         p.progress_ms = j.value("progress_ms", 0);
         p.is_playing = j.value("is_playing", false);
         p.currently_playing_type = j.value("currently_playing_type", "track");
@@ -503,11 +503,11 @@ namespace Spotify {
             if (p.currently_playing_type == "track") {
                 auto track = std::make_shared<TrackObject>();
                 j.at("item").get_to(*track);
-                p.episode = track;
+                p.item = track;
             } else if (p.currently_playing_type == "episode") {
                 auto episode = std::make_shared<EpisodeObject>();
                 j.at("item").get_to(*episode);
-                p.episode = episode;
+                p.item = episode;
             }
         }
 

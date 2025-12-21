@@ -14,7 +14,9 @@ add_library(SpotifyAPILib STATIC
         src/core/Client.cpp
         src/util/Http.cpp
         src/util/Tools.cpp
+        src/util/JsonMapping.cpp
         src/api/PlayerAPI.cpp
+
 )
 
 # Public includes: SpotifyAPILib

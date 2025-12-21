@@ -4,6 +4,7 @@
 
 #include "spotify/api/PlayerAPI.hpp"
 
+#include "nlohmann/json.hpp"
 #include "spotify/core/Client.hpp"
 #include "spotify/util/Http.hpp"
 
@@ -40,7 +41,15 @@ std::optional<Spotify::PlaybackObject> Spotify::PlayerAPI::getCurrentlyPlayingTr
         return std::nullopt;
     }
 
-    std::cout << result.body << std::endl;
+
+    try {
+        auto data = nlohmann::json::parse(result.body);
+        return data.get<Spotify::PlaybackObject>();
+
+    } catch (const nlohmann::json::exception& e) {
+        std::cerr << "JSON Mapping failed: " << e.what() << std::endl;
+        return std::nullopt;
+    }
 
     return std::nullopt;
 }

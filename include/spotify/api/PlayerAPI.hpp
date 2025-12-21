@@ -9,6 +9,7 @@
 #include <string>
 #include <optional>
 #include "spotify/util/Types.h"
+#include "spotify/util/JsonMapping.hpp"
 
 namespace Spotify {
 
@@ -20,9 +21,8 @@ namespace Spotify {
 
         explicit PlayerAPI(Client* client);
 
-        std::optional<PlaybackObject> getCurrentlyPlayingTrack() const;
-        bool pause();
-        bool play();
+        [[nodiscard]] std::optional<PlaybackObject> getCurrentlyPlayingTrack() const;
+
 
 
     private:
