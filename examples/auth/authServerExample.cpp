@@ -21,11 +21,11 @@ int main() {
     }
 
     // Creating the client
-    Spotify::Client client(client_key, client_secret);
-    Spotify::Auth auth_client(client);
+    Spotify::ClientCredentials credentials(client_key, client_secret);
+    Spotify::Auth auth_client(credentials);
 
     // Generate the auth url
-    auto url = auth_client.getAuthURL(
+    auto url = auth_client.createAuthoriseURL(
     "http://127.0.0.1:8888/callback",
     {"user-read-private", "user-read-email"});
 
@@ -37,31 +37,14 @@ int main() {
 
     // Get the auth token from the code
     if(!code.empty()) {
-        Spotify::AuthResponse response = auth_client.getAuthToken(code);
-        if (response.response_code == Spotify::SUCCESS) {
+
+        if (auth_client.exchangeCode(code)) {
             std::cout << "Authorization successful" << std::endl;
         } else {
             std::cout << "Authorization failed with code: " << Spotify::Tools::stringifyResponse(response.response_code) << std::endl;
             return 1;
         }
     }
-
-    /*
-    std::cout << "Type anything to refresh token: ";
-    std::string input;
-    std::getline(std::cin, input);
-
-    if (input.empty())
-        return 1;
-
-    Spotify::AuthResponse refresh_response = auth_client.refreshAuthToken();
-    if (refresh_response.response_code == Spotify::SUCCESS) {
-        std::cout << "Re-Authorization successful" << std::endl;
-    } else {
-        std::cout << "Re-Authorization failed with code: " << Spotify::Tools::stringifyResponse(refresh_response.response_code) << std::endl;
-        return 1;
-    }
-    */
 
     return 0;
 }

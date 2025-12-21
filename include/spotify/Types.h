@@ -10,7 +10,7 @@
 
 namespace Spotify {
 
-    struct Client {
+    struct ClientCredentials {
         std::string client_id;
         std::string client_secret;
     };
@@ -20,14 +20,15 @@ namespace Spotify {
         NETWORK_ERROR,
         AUTH_ERROR,
         PARSE_ERROR,
-        VALUE_ERROR
+        VALUE_ERROR,
+        UNKNOWN_ERROR
     };
 
     struct AuthResponse {
         std::string access_token;
         std::string token_type;
         std::string scope;
-        int expires_in = 0;
+        std::chrono::time_point<std::chrono::system_clock> expire_time;
         std::string refresh_token;
         ResponseCode response_code;
     };

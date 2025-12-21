@@ -24,28 +24,38 @@ namespace Spotify {
     class Auth {
         // Funcs
         public:
-        Auth(Client keys );
+        explicit Auth(const ClientCredentials& credentials);
         ~Auth() = default;
 
-        std::string getAuthURL(
+        // OAuth2 Flow
+        std::string createAuthoriseURL(
             const std::string &redirectUri,
             const std::vector<std::string> &scopes,
-            std::optional<std::string> state = std::nullopt);
+            const std::optional<std::string>& state = std::nullopt);
 
-        AuthResponse getAuthToken(const std::string &code);
+        bool exchangeCode(const std::string &code);
+        bool refreshAccessToken(const std::optional<std::string>& refresh_token = std::nullopt);
 
-        AuthResponse refreshAuthToken(const std::optional<std::string>& refresh_token = std::nullopt);
+
+        // Getters
+        std::string getAccessToken();
+        [[nodiscard]] AuthResponse getAuthResponse() const;
+        [[nodiscard]] ResponseCode getError() const;
 
         private:
         AuthResponse buildAuthResponse(const std::string& json);
-        [[nodiscard]] std::string encodeClientCreds() const;
+        [[nodiscard]] std::string encodeClientCredentials() const;
+        bool isTokenExpired() const;
+
 
         // Vars
         public:
         private:
-        Client m_keys;
+        ClientCredentials m_credentials;
         std::string m_redirectUri;
+        AuthResponse m_authResponse;
         std::string m_refresh_token;
+
     };
 }
 

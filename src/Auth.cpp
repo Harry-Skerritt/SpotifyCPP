@@ -13,14 +13,14 @@ static size_t WriteCallback(void* contents, size_t size, size_t nmemb, void* use
 
 
 
-Spotify::Auth::Auth(Client keys) {
-    m_keys = std::move(keys);
+Spotify::Auth::Auth(const ClientCredentials& keys) {
+    m_credentials = keys;
 }
 
-std::string Spotify::Auth::getAuthURL(
+std::string Spotify::Auth::createAuthoriseURL(
     const std::string& redirect_uri,
     const std::vector<std::string>& scopes,
-    const std::optional<std::string> state)
+    const std::optional<std::string>& state)
 {
 
     // Make scopes one string
@@ -36,7 +36,7 @@ std::string Spotify::Auth::getAuthURL(
 
     std::ostringstream oss;
     oss << "response_type=code"
-    << "&client_id=" << WebTools::urlEncode(m_keys.client_id)
+    << "&client_id=" << WebTools::urlEncode(m_credentials.client_id)
     << "&scope=" << WebTools::urlEncode(scope_stream.str())
     << "&redirect_uri=" << WebTools::urlEncode(redirect_uri)
     << "&state=" << WebTools::urlEncode(actual_state);
@@ -46,10 +46,7 @@ std::string Spotify::Auth::getAuthURL(
     return auth_url;
 }
 
-Spotify::AuthResponse Spotify::Auth::getAuthToken(const std::string &code) {
-
-    AuthResponse response;
-
+bool Spotify::Auth::exchangeCode(const std::string &code) {
     CURL *curl;
     CURLcode result;
     curl_slist *headers = NULL;
@@ -69,7 +66,7 @@ Spotify::AuthResponse Spotify::Auth::getAuthToken(const std::string &code) {
 
 
     // Auth Header
-    std::string auth_header = "Authorization: Basic " + encodeClientCreds();
+    std::string auth_header = "Authorization: Basic " + encodeClientCredentials();
 
     long http_code = 0;
     std::string response_str;
@@ -97,9 +94,9 @@ Spotify::AuthResponse Spotify::Auth::getAuthToken(const std::string &code) {
 
         // Handle a CURL error - Network Level
         if (result != CURLE_OK) {
-            response.response_code = NETWORK_ERROR;
             curl_easy_cleanup(curl);
-            return response;
+            m_authResponse.response_code = NETWORK_ERROR;
+            return false;
         }
 
         curl_easy_getinfo(curl, CURLINFO_RESPONSE_CODE, &http_code);
@@ -113,27 +110,25 @@ Spotify::AuthResponse Spotify::Auth::getAuthToken(const std::string &code) {
 
     // API bad response
     if (http_code != 200) {
-        response.response_code = AUTH_ERROR;
         std::cerr << http_code << ": " << WebTools::getHttpStatusText(http_code) << std::endl;
-        return response;
+        m_authResponse.response_code = AUTH_ERROR;
+        return false;
     }
 
     // API Good response
-    response = buildAuthResponse(response_str);
-    return response;
+    buildAuthResponse(response_str);
+    return true;
 }
 
-Spotify::AuthResponse Spotify::Auth::refreshAuthToken(const std::optional<std::string>& refresh_token) {
-    AuthResponse response;
-
+bool Spotify::Auth::refreshAccessToken(const std::optional<std::string>& refresh_token) {
     CURL *curl;
     CURLcode result;
     curl_slist *headers = NULL;
 
     if (!refresh_token.has_value() && m_refresh_token.empty()) {
         // No refresh token - error
-        response.response_code = VALUE_ERROR;
-        return response;
+        m_authResponse.response_code = VALUE_ERROR;
+        return false;
     }
 
 #if WIN32
@@ -146,10 +141,10 @@ Spotify::AuthResponse Spotify::Auth::refreshAuthToken(const std::optional<std::s
     std::ostringstream post_fields;
     post_fields << "grant_type=refresh_token"
                 << "&refresh_token=" << WebTools::urlEncode(refresh_token.value_or(m_refresh_token))
-                << "&client_id=" << WebTools::urlEncode(m_keys.client_id);
+                << "&client_id=" << WebTools::urlEncode(m_credentials.client_id);
     std::string body_str = post_fields.str();
 
-    std::string auth_header = "Authorization: Basic " + encodeClientCreds();
+    std::string auth_header = "Authorization: Basic " + encodeClientCredentials();
 
     long http_code = 0;
     std::string response_str;
@@ -176,9 +171,9 @@ Spotify::AuthResponse Spotify::Auth::refreshAuthToken(const std::optional<std::s
 
         // Handle a CURL error - Network Level
         if (result != CURLE_OK) {
-            response.response_code = NETWORK_ERROR;
             curl_easy_cleanup(curl);
-            return response;
+            m_authResponse.response_code = NETWORK_ERROR;
+            return false;
         }
 
         curl_easy_getinfo(curl, CURLINFO_RESPONSE_CODE, &http_code);
@@ -191,32 +186,55 @@ Spotify::AuthResponse Spotify::Auth::refreshAuthToken(const std::optional<std::s
 
     // API bad response
     if (http_code != 200) {
-        response.response_code = AUTH_ERROR;
+        m_authResponse.response_code = AUTH_ERROR;
         std::cerr << "CURL Response: " << response_str << std::endl;
-        return response;
+        return false;
     }
 
     // API Good response
-    response = buildAuthResponse(response_str);
-    return response;
+    buildAuthResponse(response_str);
+    return true;
+}
+
+// Getters
+std::string Spotify::Auth::getAccessToken() {
+    if (isTokenExpired()) {
+        if (!refreshAccessToken()) {
+            throw std::runtime_error("Failed to refresh access token");
+        }
+    }
+
+    return m_authResponse.access_token;
 }
 
 
+Spotify::AuthResponse Spotify::Auth::getAuthResponse() const {
+    return m_authResponse;
+}
+
+Spotify::ResponseCode Spotify::Auth::getError() const {
+    return m_authResponse.response_code;
+}
+
+
+// --- PRIVATE ---
 // Helpers
-
-
 Spotify::AuthResponse Spotify::Auth::buildAuthResponse(const std::string &json) {
     AuthResponse response;
 
     // API good response
+    // Store 'easy' values
     response.access_token = WebTools::extractValue(json, "access_token");
     response.token_type = WebTools::extractValue(json, "token_type");
     response.scope = WebTools::extractValue(json, "scope");
-    response.expires_in = WebTools::extractIntValue(json, "expires_in");
+
+    // Workout when the expiry time is
+    int expires_in = WebTools::extractIntValue(json, "expires_in");
+    response.expire_time = std::chrono::system_clock::now() + std::chrono::seconds(expires_in);
+
+    // Store the refresh on its own too
     m_refresh_token = WebTools::extractValue(json, "refresh_token");
     response.refresh_token = m_refresh_token;
-
-
 
     if (response.access_token.empty()) {
         response.response_code = PARSE_ERROR;
@@ -224,11 +242,17 @@ Spotify::AuthResponse Spotify::Auth::buildAuthResponse(const std::string &json) 
         response.response_code = SUCCESS;
     }
 
+    m_authResponse = response;
     return response;
 }
 
-std::string Spotify::Auth::encodeClientCreds() const {
-    std::string client_creds = m_keys.client_id + ":" +  m_keys.client_secret;
+std::string Spotify::Auth::encodeClientCredentials() const {
+    std::string client_creds = m_credentials.client_id + ":" +  m_credentials.client_secret;
     std::string encoded = base64_encode(client_creds);
     return encoded;
 }
+
+bool Spotify::Auth::isTokenExpired() const {
+    return std::chrono::system_clock::now() >= m_authResponse.expire_time;
+}
+
