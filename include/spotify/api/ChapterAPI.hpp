@@ -21,8 +21,8 @@ namespace Spotify {
         explicit ChapterAPI(Client* client) : BaseAPI(client) {}
 
         // GET
-        std::optional<ChapterObject> getChapter(const std::string& id, const std::optional<std::string>& market = std::nullopt) const;
-        std::optional<ChapterListObject> getMultipleChapters(const std::vector<std::string>& ids, const std::optional<std::string>& market = std::nullopt) const;
+        [[nodiscard]] std::optional<ChapterObject> getChapter(const std::string& id, const std::optional<std::string>& market = std::nullopt) const;
+        [[nodiscard]] std::optional<ChapterListObject> getMultipleChapters(const std::vector<std::string>& ids, const std::optional<std::string>& market = std::nullopt) const;
 
     // Vars
     private:

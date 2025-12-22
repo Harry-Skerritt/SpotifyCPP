@@ -3,11 +3,13 @@
 //
 
 #include "spotify/core/Client.hpp"
+
 #include "spotify/api/AlbumAPI.hpp"
 #include "spotify/api/ArtistAPI.hpp"
 #include "spotify/api/AudiobookAPI.hpp"
 #include "spotify/api/CategoryAPI.hpp"
 #include "spotify/api/ChapterAPI.hpp"
+#include "spotify/api/EpisodeAPI.hpp"
 #include "spotify/api/PlayerAPI.hpp"
 
 
@@ -37,6 +39,10 @@ namespace Spotify {
 
     ChapterAPI Client::chapter() {
         return ChapterAPI(this);
+    }
+
+    EpisodeAPI Client::episode() {
+        return EpisodeAPI(this);
     }
 
     PlayerAPI Client::player() {

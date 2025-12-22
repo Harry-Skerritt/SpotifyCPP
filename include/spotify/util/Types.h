@@ -664,6 +664,10 @@ namespace Spotify {
         std::vector<ChapterObject> chapters;
     };
 
+    struct EpisodeListObject {
+        std::vector<EpisodeObject> episodes;
+    };
+
     struct TrackListObject {
         std::vector<TrackObject> tracks;
     };
