@@ -6,6 +6,11 @@
 #include <spotify/spotify.hpp>
 
 int main() {
+    std::cout << "Starting " << Spotify::getLibraryName()
+  << " v" << Spotify::getLibraryVersion() << std::endl;
+    std::cout << "Copyright (c) 2025 Harry Skerritt" << std::endl;
+    std::cout << "--------------------------------------------" << "\n" << std::endl;
+
     // Getting client values from .env
     std::string env_path = "/Volumes/Data/Code/C++/2025/SpotifyAPILib/.env";
     Spotify::Tools::loadEnv(env_path);

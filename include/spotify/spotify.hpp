@@ -7,6 +7,8 @@
 
 #pragma once
 
+#include "spotify/SpotifyVersion.hpp"
+
 // API
 #include "spotify/api/AlbumAPI.hpp"
 #include "spotify/api/PlayerAPI.hpp"

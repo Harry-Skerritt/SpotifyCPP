@@ -11,6 +11,12 @@ namespace Spotify {
     class ExampleUtils {
     public:
         static Auth authenticateFromEnv() {
+
+            std::cout << "Starting " << Spotify::getLibraryName()
+              << " v" << Spotify::getLibraryVersion() << std::endl;
+            std::cout << "Copyright (c) 2025 Harry Skerritt" << std::endl;
+            std::cout << "--------------------------------------------" << "\n" << std::endl;
+
             // 1. Load Env
             std::string env_path = "/Volumes/Data/Code/C++/2025/SpotifyAPILib/.env";
             Tools::loadEnv(env_path);
