@@ -39,6 +39,8 @@ namespace Spotify {
 
             if (result.body.empty()) return std::nullopt;
 
+            //std::cout << result.body << std::endl;
+
             try {
                 auto data = nlohmann::json::parse(result.body);
 

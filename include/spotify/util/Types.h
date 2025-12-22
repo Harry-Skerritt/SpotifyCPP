@@ -673,6 +673,7 @@ namespace Spotify {
 
 
 
+
     // ---- CUSTOM TYPES ----
     struct OffsetObject {
         std::string position;

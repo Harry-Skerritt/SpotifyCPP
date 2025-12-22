@@ -72,10 +72,6 @@ configure_file(
 
 
 # --- Album Examples ---
-add_executable(example_newReleases examples/albums/newReleaseExample.cpp)
-target_link_libraries(example_newReleases PRIVATE SpotifyAPILib)
-set_example_output_dir(example_newReleases "albums")
-
 add_executable(example_getAlbums examples/albums/getAlbumExample.cpp)
 target_link_libraries(example_getAlbums PRIVATE SpotifyAPILib)
 set_example_output_dir(example_getAlbums "albums")
@@ -96,6 +92,9 @@ add_executable(example_deleteUserAlbums examples/albums/removeAlbumForUserExampl
 target_link_libraries(example_deleteUserAlbums PRIVATE SpotifyAPILib)
 set_example_output_dir(example_deleteUserAlbums "albums")
 
+add_executable(example_newReleases examples/albums/newReleaseExample.cpp)
+target_link_libraries(example_newReleases PRIVATE SpotifyAPILib)
+set_example_output_dir(example_newReleases "albums")
 
 # --- Artist Examples ---
 add_executable(example_getArtists examples/artists/getArtistExample.cpp)
@@ -109,6 +108,31 @@ set_example_output_dir(example_getArtistsAlbums "artists")
 add_executable(example_getArtistTopTracks examples/artists/getArtistTopTracksExample.cpp)
 target_link_libraries(example_getArtistTopTracks PRIVATE SpotifyAPILib)
 set_example_output_dir(example_getArtistTopTracks "artists")
+
+
+
+# --- Audiobook Examples ---
+add_executable(example_getAudiobook examples/audiobooks/getAudiobookExample.cpp)
+target_link_libraries(example_getAudiobook PRIVATE SpotifyAPILib)
+set_example_output_dir(example_getAudiobook "audiobooks")
+
+add_executable(example_getAudiobookChapters examples/audiobooks/getAudiobookChapters.cpp)
+target_link_libraries(example_getAudiobookChapters PRIVATE SpotifyAPILib)
+set_example_output_dir(example_getAudiobookChapters "audiobooks")
+
+add_executable(example_getUserAudiobooks examples/audiobooks/getUserAudiobooksExample.cpp)
+target_link_libraries(example_getUserAudiobooks PRIVATE SpotifyAPILib)
+set_example_output_dir(example_getUserAudiobooks "audiobooks")
+
+add_executable(example_saveUserAudiobook examples/audiobooks/saveAudiobookForUser.cpp)
+target_link_libraries(example_saveUserAudiobook PRIVATE SpotifyAPILib)
+set_example_output_dir(example_saveUserAudiobook "audiobooks")
+
+add_executable(example_deleteUserAudiobook examples/audiobooks/removeAudiobookForUser.cpp)
+target_link_libraries(example_deleteUserAudiobook PRIVATE SpotifyAPILib)
+set_example_output_dir(example_deleteUserAudiobook "audiobooks")
+
+
 
 # --- ... ---
 

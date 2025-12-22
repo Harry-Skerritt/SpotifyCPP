@@ -31,7 +31,7 @@ namespace Spotify {
             return std::nullopt;
         }
 
-        std::string url = BASE_AUDIOBOOK_USER_URL + "?ids=" + id_list;
+        std::string url = BASE_AUDIOBOOK_URL + "?ids=" + id_list;
 
         return fetchAndParse<AudiobookListObject>(url);
     }

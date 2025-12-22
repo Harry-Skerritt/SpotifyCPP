@@ -617,6 +617,7 @@ namespace Spotify {
     void from_json(const json &j, ArtistListObject &al) {
         al.artists = j.value("artists", std::vector<ArtistObject>{});
     }
+
     void from_json(const json &j, AudiobookListObject &ab) {
         ab.audiobooks = j.value("audiobooks", std::vector<AudiobookObject>{});
     }
