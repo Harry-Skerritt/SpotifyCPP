@@ -39,10 +39,8 @@ namespace Spotify {
         void removeUsersSavedAlbums(std::vector<std::string> ids) const;
 
 
-    private:
 
     // Vars
-    public:
     private:
         const std::string BASE_ALBUM_URL = "https://api.spotify.com/v1/albums";
         const std::string BASE_ALBUM_USER_URL = "https://api.spotify.com/v1/me/albums";

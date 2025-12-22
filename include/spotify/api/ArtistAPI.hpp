@@ -11,16 +11,15 @@
 #include <iostream>
 #include "spotify/util/Types.h"
 #include "spotify/util/JsonMapping.hpp"
+#include "spotify/api/BaseAPI.hpp"
 
 namespace Spotify {
 
-    class Client;
-
-    class ArtistAPI {
+    class ArtistAPI : public BaseAPI {
     // Funcs
     public:
 
-        explicit ArtistAPI(Client* client);
+        explicit ArtistAPI(Client* client) : BaseAPI(client) {};
 
         // GET
         [[nodiscard]] std::optional<ArtistObject> getArtist(const std::string &id) const;
@@ -31,14 +30,8 @@ namespace Spotify {
             std::optional<int> limit = std::nullopt, std::optional<int> offset = std::nullopt) const;
         [[nodiscard]] std::optional<TrackListObject> getArtistTopTracks(const std::string &id, std::optional<std::string> market = std::nullopt) const;
 
-    private:
-        [[nodiscard]] std::string tryGetAccessToken() const;
-
     // Vars
-    public:
     private:
-        Client* m_client;
-
         const std::string BASE_ARTIST_URL = "https://api.spotify.com/v1/artists";
     };
 }

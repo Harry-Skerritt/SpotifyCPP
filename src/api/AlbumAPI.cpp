@@ -15,16 +15,20 @@ namespace Spotify {
 
     // --- GET ---
     std::optional<AlbumObject> AlbumAPI::getAlbum(const std::string &id, std::optional<std::string> market) const {
+
         std::string url = BASE_ALBUM_URL + "/" + WebTools::urlEncode(id);
+
         if (market.has_value() && !market->empty() && Tools::isValidMarket(*market)) {
             url += "?market=" + WebTools::urlEncode(*market);
         }
+
         return fetchAndParse<AlbumObject>(url);
     }
 
     std::optional<AlbumListObject> AlbumAPI::getMultipleAlbums(const std::vector<std::string>& ids, std::optional<std::string> market) const {
 
         std::string id_list = Tools::toCSV(ids, 0, 20);
+
         if (id_list == "size-error") {
             std::cerr << "Error: You must provide between 1 and 20 IDs." << std::endl;
             return std::nullopt;
