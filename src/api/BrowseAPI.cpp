@@ -26,28 +26,19 @@ namespace Spotify {
 
         std::string url = BASE_BROWSE_URL + "search?q=" + WebTools::urlEncode(q);
 
-        std::vector<std::string> params;
         std::string type_str = buildSearchTypeString(type);
-        params.push_back("type=" + type_str);
+        url += "&type=" + WebTools::urlEncode(type_str);
 
         if (market &&  !market->empty() && Tools::isValidMarket(*market)) {
-            params.push_back("market=" + WebTools::urlEncode(*market));
+            url += "&market=" + WebTools::urlEncode(*market);
         }
 
         if (limit && Tools::inRange(*limit, 1, 50)) {
-            params.push_back("limit=" + std::to_string(*limit));
+            url += "&limit=" + std::to_string(*limit);
         }
 
         if (offset && offset >= 0) {
-            params.push_back("offset=" + std::to_string(*offset));
-        }
-
-        if (!params.empty()) {
-            url += "?";
-            for (size_t i = 0; i < params.size(); i++) {
-                url += params[i];
-                if (i < params.size() - 1) url += "&";
-            }
+            url += "&offset=" + std::to_string(*offset);
         }
 
         return fetchAndParse<SearchObject>(url);

@@ -138,6 +138,17 @@ target_link_libraries(example_deleteUserAudiobook PRIVATE SpotifyAPILib)
 set_example_output_dir(example_deleteUserAudiobook "audiobooks")
 
 
+# --- Browse Examples ---
+add_executable(example_getAvailableMarkets examples/browse/getAvailableMarketsExample.cpp)
+target_link_libraries(example_getAvailableMarkets PRIVATE SpotifyAPILib)
+set_example_output_dir(example_getAvailableMarkets "browse")
+
+add_executable(example_Search examples/browse/searchExample.cpp)
+target_link_libraries(example_Search PRIVATE SpotifyAPILib)
+set_example_output_dir(example_Search "browse")
+
+
+
 # --- Category Examples ---
 add_executable(example_getSingleCategory examples/categories/getSingleCategoryExample.cpp)
 target_link_libraries(example_getSingleCategory PRIVATE SpotifyAPILib)
