@@ -17,6 +17,7 @@ namespace Spotify {
     class AlbumAPI;
     class ArtistAPI;
     class AudiobookAPI;
+    class BrowseAPI;
     class CategoryAPI;
     class ChapterAPI;
     class EpisodeAPI;
@@ -33,21 +34,14 @@ namespace Spotify {
         AlbumAPI album();
         ArtistAPI artist();
         AudiobookAPI audiobook();
+        BrowseAPI browse();
         CategoryAPI category();
         ChapterAPI chapter();
         EpisodeAPI episode();
         PlayerAPI player();
 
 
-
-
-
-    private:
-
     // Vars
-    public:
-        const std::string BASE_API_URL = "https://api.spotify.com/v1/";
-
     private:
         Auth& m_auth;
 

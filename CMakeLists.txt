@@ -19,10 +19,12 @@ add_library(SpotifyAPILib STATIC
         src/api/AlbumAPI.cpp
         src/api/ArtistAPI.cpp
         src/api/AudiobookAPI.cpp
+        src/api/BrowseAPI.cpp
         src/api/CategoryAPI.cpp
         src/api/ChapterAPI.cpp
         src/api/EpisodeAPI.cpp
         src/api/PlayerAPI.cpp
+
 
 )
 

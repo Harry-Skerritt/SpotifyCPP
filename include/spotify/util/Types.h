@@ -705,7 +705,7 @@ namespace Spotify {
 
     };
 
-    enum RepeatState {
+    enum class RepeatState {
         Track,
         Context,
         Off
@@ -713,7 +713,7 @@ namespace Spotify {
 
 
     // --- Include Groups ---
-    enum IncludeGroups {
+    enum class IncludeGroups {
         Album,
         Single,
         AppearsOn,
@@ -721,7 +721,7 @@ namespace Spotify {
     };
 
     // Todo: Move to tools?
-    inline std::string includeGroupToString(IncludeGroups group) {
+    inline std::string includeGroupToString(const IncludeGroups group) {
         switch (group) {
             case IncludeGroups::Album:       return "album";
             case IncludeGroups::Single:      return "single";
@@ -738,6 +738,45 @@ namespace Spotify {
         for (size_t i = 0; i < groups.size(); ++i) {
             result += includeGroupToString(groups[i]);
             if (i < groups.size() - 1) {
+                result += ",";
+            }
+        }
+        return result;
+    }
+
+
+    // --- Search Types ---
+    enum class SearchType {
+        Album,
+        Artist,
+        Playlist,
+        Track,
+        Show,
+        Episode,
+        Audiobook
+    };
+
+    inline std::string searchTypeToString(const SearchType type) {
+        switch (type) {
+            case SearchType::Album:       return "album";
+            case SearchType::Artist:      return "artist";
+            case SearchType::Playlist:    return "playlist";
+            case SearchType::Track:       return "track";
+            case SearchType::Show:        return "show";
+            case SearchType::Episode:     return "episode";
+            case SearchType::Audiobook:   return "audiobook";
+            default: return "";
+        }
+    }
+
+
+    inline std::string buildSearchTypeString(const std::vector<SearchType>& types) {
+        if (types.empty()) return "";
+
+        std::string result;
+        for (size_t i = 0; i < types.size(); ++i) {
+            result += searchTypeToString(types[i]);
+            if (i < types.size() - 1) {
                 result += ",";
             }
         }
