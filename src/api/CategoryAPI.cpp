@@ -24,7 +24,7 @@ namespace Spotify {
 
     }
 
-    std::optional<PagedCategoryObject> CategoryAPI::getMultipleBrowseCategories(std::optional<std::string> locale, std::optional<int> limit, std::optional<int> offset) {
+    std::optional<PagedCategoryObject> CategoryAPI::getMultipleBrowseCategories(const std::optional<std::string> &locale, const std::optional<int> limit, const std::optional<int> offset) const {
 
         std::string url = BASE_CATEGORY_URL;
 
