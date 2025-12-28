@@ -64,18 +64,23 @@ namespace Spotify {
                 std::cerr << "\n[Spotify API Error] Status: " << e.status()
                           << "\nReason: " << e.reason()
                           << "\nMessage: " << e.message() << std::endl;
+                throw;
             }
             catch (const Spotify::NetworkException& e) {
                 std::cerr << "\n[Network Error] " << e.what() << std::endl;
+                throw;
             }
             catch (const Spotify::LogicException& e) {
                 std::cerr << "\n[Configuration Error] " << e.what() << std::endl;
+                throw;
             }
             catch (const Spotify::Exception& e) {
                 std::cerr << "\n[Library Error] " << e.what() << std::endl;
+                throw;
             }
             catch (const std::exception& e) {
                 std::cerr << "\n[Standard Exception] " << e.what() << std::endl;
+                throw;
             }
         }
     };
