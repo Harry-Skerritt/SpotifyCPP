@@ -21,6 +21,8 @@ namespace Spotify {
         Client* m_client;
         explicit BaseAPI(Client* client) : m_client(client) {}
 
+
+
         // --- GET + Parse Helper ---
         template <typename T>
         std::optional<T> fetchAndParse(const std::string& url, const std::string& wrapperKey = "") const {
@@ -55,19 +57,29 @@ namespace Spotify {
         }
 
         // --- PUT/DELETE/POST Helper ---
-        void sendAction(const std::string& method, const std::string& url, const std::string& body = "") const {
-            if (!m_client) return;
+        std::optional<std::string> sendAction(const std::string& method, const std::string& url, const std::string& body = "") const {
+            if (!m_client) return std::nullopt;
 
             std::string token = tryGetAccessToken();
-            HTTP::Result result;
+            HTTP::Result result = {};
 
             if (method == "PUT") result = HTTP::put(url, token, body);
             else if (method == "DELETE") result = HTTP::remove(url, token, body);
             else if (method == "POST") result = HTTP::post(url, token, body);
-
-            if (result.code != RFC2616_Code::OK && result.code != RFC2616_Code::NO_CONTENT) {
-                std::cerr << method << " Failed [" << (int)result.code << "]: " << result.body << std::endl;
+            else {
+                std::cerr << "Unsupported method: " << method << std::endl;
+                return std::nullopt;
             }
+
+            if (result.code != RFC2616_Code::OK &&
+                result.code != RFC2616_Code::NO_CONTENT &&
+                result.code != RFC2616_Code::CREATED)
+            {
+                std::cerr << method << " Failed [" << (int)result.code << "]: " << result.body << std::endl;
+                return std::nullopt;
+            }
+
+            return result.body;
         }
 
         [[nodiscard]] std::string tryGetAccessToken() const;

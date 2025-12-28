@@ -57,7 +57,8 @@ namespace Spotify {
         curl_slist *headers = NULL;
         std::string auth = "Authorization: Bearer " + bearer;
         headers = curl_slist_append(headers, auth.c_str());
-        headers = curl_slist_append(headers, "User-Agent: spotify-cpp-client");
+       // headers = curl_slist_append(headers, "User-Agent: spotify-cpp-client");
+        headers=curl_slist_append(headers, "Content-Type: application/json");
 
         curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
         curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);

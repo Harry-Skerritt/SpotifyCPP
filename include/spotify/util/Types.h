@@ -363,12 +363,22 @@ namespace Spotify {
     };
 
 
-    // -- Linked Objects --
+    // -- Paged Objects --
     struct PlaylistTrackObject {
         std::string added_at;
         AddedByObject added_by;
         bool is_local;
         std::variant<std::shared_ptr<TrackObject>, std::shared_ptr<EpisodeObject>> track;
+
+        [[nodiscard]] std::shared_ptr<TrackObject> asTrack() const {
+            if (auto ptr = std::get_if<std::shared_ptr<TrackObject>>(&track)) return *ptr;
+            return nullptr;
+        }
+
+        [[nodiscard]] std::shared_ptr<EpisodeObject> asEpisode() const {
+            if (auto ptr = std::get_if<std::shared_ptr<EpisodeObject>>(&track)) return *ptr;
+            return nullptr;
+        }
     };
 
     using PagedTrackObject = PagingObject<SimplifiedTrackObject>;
