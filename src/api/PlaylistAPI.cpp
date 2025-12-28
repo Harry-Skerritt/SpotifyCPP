@@ -228,15 +228,49 @@ namespace Spotify {
 
     void PlaylistAPI::addCustomPlaylistCover(
         const std::string &playlist_id,
-        const std::string &image) const
+        const std::string &image_path) const
     {
-        // Todo:
-        // Needs to take in an image and override headers
+        std::string raw_image_data;
+        bool is_url (image_path.rfind("http://", 0) == 0 || image_path.rfind("https://", 0) == 0);
+
+        if (is_url) {
+            // Is URL
+            auto res = HTTP::get(image_path, "");
+
+            if (res.code == RFC2616_Code::OK) {
+                raw_image_data = res.body;
+            } else {
+                std::cerr << "Failed to download image from URL." << std::endl;
+                return;
+            }
+        } else {
+            // Is File
+            std::ifstream file(image_path, std::ios::binary);
+            if (file.is_open()) {
+                std::stringstream buffer;
+                buffer << file.rdbuf();
+                raw_image_data = buffer.str();
+            } else {
+                std::cerr << "Could not open local file: " << image_path << std::endl;
+                return;
+            }
+        }
+
+        if (raw_image_data.size() > 256 * 1024) {
+            std::cerr << "Image too large (Max 256KB). Size: " << raw_image_data.size() / 1024 << "KB" << std::endl;
+            return;
+        }
+        std::string base64_image = base64_encode(raw_image_data);
+
         std::string url = BASE_PLAYLIST_URL + "/" + playlist_id + "/images";
 
+        std::map<std::string, std::string> extra_headers = {{ "Content-Type:", "image/jpeg"} };
+
         nlohmann::json j;
-        j["image"] = base64_encode(image);
-        sendAction("PUT", url, j.dump());
+        j["image"] = base64_encode(base64_image);
+
+
+        sendAction("PUT", url, j.dump(), extra_headers);
     }
 
 

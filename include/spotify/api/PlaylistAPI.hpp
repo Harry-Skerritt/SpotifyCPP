@@ -35,11 +35,11 @@ namespace Spotify {
         void changePlaylistDetails(const std::string& playlist_id, const std::optional<std::string>& name = std::nullopt, const std::optional<bool>& is_public = std::nullopt, const std::optional<std::string>& description = std::nullopt,const std::optional<bool>& is_collaborative = std::nullopt) const;
         void replacePlaylistItems(const std::string& playlist_id, const std::vector<std::string>& uris) const;
         void reorderPlaylistItems(const std::string& playlist_id, const int& range_start,const int& insert_before, const std::optional<int>& range_length = std::nullopt, const std::optional<std::string>& snapshot_id = std::nullopt) const;
-        void addCustomPlaylistCover(const std::string& playlist_id, const std::string& image) const;
+        void addCustomPlaylistCover(const std::string& playlist_id, const std::string& image_path) const;
 
         // POST
         void addItemsToPlaylist(const std::string& playlist_id, const std::vector<std::string>& uris, const std::optional<int>& position = std::nullopt) const;
-        std::optional<PlaylistObject> createPlaylist(const std::string& user_id, const std::string& name, const std::optional<bool>& is_public = std::nullopt, const std::optional<bool>& is_collaborative = std::nullopt, const std::optional<std::string>& description = std::nullopt) const;
+        [[nodiscard]] std::optional<PlaylistObject> createPlaylist(const std::string& user_id, const std::string& name, const std::optional<bool>& is_public = std::nullopt, const std::optional<bool>& is_collaborative = std::nullopt, const std::optional<std::string>& description = std::nullopt) const;
 
         // DELETE
         void removePlaylistItems(const std::string& playlist_id, const std::vector<URIObject>& tracks, const std::optional<std::string>& snapshot_id = std::nullopt) const;

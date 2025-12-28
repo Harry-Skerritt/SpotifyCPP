@@ -44,6 +44,7 @@ namespace Spotify {
                     Scope::UserReadPlaybackPosition,
                     Scope::PlaylistModifyPublic,
                     Scope::PlaylistModifyPrivate,
+                    Scope::UGCImageUpload
 
                 });
 

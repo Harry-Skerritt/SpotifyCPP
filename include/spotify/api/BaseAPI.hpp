@@ -57,15 +57,15 @@ namespace Spotify {
         }
 
         // --- PUT/DELETE/POST Helper ---
-        std::optional<std::string> sendAction(const std::string& method, const std::string& url, const std::string& body = "") const {
+        [[nodiscard]] std::optional<std::string> sendAction(const std::string& method, const std::string& url, const std::string& body = "", const HTTP::HeaderMap& extra_headers = {}) const {
             if (!m_client) return std::nullopt;
 
             std::string token = tryGetAccessToken();
             HTTP::Result result = {};
 
-            if (method == "PUT") result = HTTP::put(url, token, body);
-            else if (method == "DELETE") result = HTTP::remove(url, token, body);
-            else if (method == "POST") result = HTTP::post(url, token, body);
+            if (method == "PUT") result = HTTP::put(url, token, body, extra_headers);
+            else if (method == "DELETE") result = HTTP::remove(url, token, body, extra_headers);
+            else if (method == "POST") result = HTTP::post(url, token, body, extra_headers);
             else {
                 std::cerr << "Unsupported method: " << method << std::endl;
                 return std::nullopt;

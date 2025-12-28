@@ -6,14 +6,32 @@
 
 #include <curl/curl.h>
 
+#include "spotify/util/base64.hpp"
+
 namespace Spotify {
     static size_t WriteCallback(void* contents, size_t size, size_t nmemb, void* userp) {
         ((std::string*)userp)->append((char*)contents, size * nmemb);
         return size * nmemb;
     }
 
+    static curl_slist* prepareHeaders(const std::string& bearer, const HTTP::HeaderMap &extra) {
+        curl_slist* headers = NULL;
 
-    HTTP::Result HTTP::get(const std::string &url, const std::string &bearer) {
+        std::string auth = "Authorization: Bearer " + bearer;
+        headers = curl_slist_append(headers, auth.c_str());
+        headers = curl_slist_append(headers, "User-Agent: spotify-cpp-client");
+
+        for (const auto& [key, value] : extra) {
+            std::string header_str = key + ": " + value;
+            headers = curl_slist_append(headers, header_str.c_str());
+        }
+
+        return headers;
+    }
+
+
+    // For API
+    HTTP::Result HTTP::get(const std::string &url, const std::string &bearer, const HeaderMap &extra_headers) {
         CURL *curl;
         HTTP:Result result { Spotify::RFC2616_Code::NOT_IMPLEMENTED, "" };
 
@@ -21,10 +39,7 @@ namespace Spotify {
 
         if (!curl) return result;
 
-        curl_slist *headers = NULL;
-        std::string auth = "Authorization: Bearer " + bearer;
-        headers = curl_slist_append(headers, auth.c_str());
-        headers = curl_slist_append(headers, "User-Agent: spotify-cpp-client");
+        curl_slist *headers = prepareHeaders(bearer, extra_headers);
 
         curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
         curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
@@ -46,7 +61,7 @@ namespace Spotify {
         return result;
     }
 
-    HTTP::Result HTTP::post(const std::string &url, const std::string &bearer, const std::string &body) {
+    HTTP::Result HTTP::post(const std::string &url, const std::string &bearer, const std::string &body, const HeaderMap &extra_headers) {
         CURL *curl;
         HTTP:Result result { Spotify::RFC2616_Code::NOT_IMPLEMENTED, "" };
 
@@ -54,11 +69,11 @@ namespace Spotify {
 
         if (!curl) return result;
 
-        curl_slist *headers = NULL;
-        std::string auth = "Authorization: Bearer " + bearer;
-        headers = curl_slist_append(headers, auth.c_str());
-       // headers = curl_slist_append(headers, "User-Agent: spotify-cpp-client");
-        headers=curl_slist_append(headers, "Content-Type: application/json");
+        curl_slist *headers = prepareHeaders(bearer, extra_headers);
+
+        if (!body.empty() && extra_headers.find("Content-Type") == extra_headers.end()) {
+            headers = curl_slist_append(headers, "Content-Type: application/json");
+        }
 
         curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
         curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
@@ -87,7 +102,7 @@ namespace Spotify {
         return result;
     }
 
-    HTTP::Result HTTP::put(const std::string &url, const std::string &bearer, const std::string &body) {
+    HTTP::Result HTTP::put(const std::string &url, const std::string &bearer, const std::string &body, const HeaderMap &extra_headers) {
         CURL *curl;
         HTTP:Result result { Spotify::RFC2616_Code::NOT_IMPLEMENTED, "" };
 
@@ -95,12 +110,9 @@ namespace Spotify {
 
         if (!curl) return result;
 
-        curl_slist *headers = NULL;
-        std::string auth = "Authorization: Bearer " + bearer;
-        headers = curl_slist_append(headers, auth.c_str());
-        headers = curl_slist_append(headers, "User-Agent: spotify-cpp-client");
+        curl_slist *headers = prepareHeaders(bearer, extra_headers);
 
-        if (!body.empty()) {
+        if (!body.empty() && extra_headers.find("Content-Type") == extra_headers.end()) {
             headers = curl_slist_append(headers, "Content-Type: application/json");
         }
 
@@ -132,7 +144,7 @@ namespace Spotify {
         return result;
     }
 
-    HTTP::Result HTTP::remove(const std::string &url, const std::string &bearer, const std::string &body) {
+    HTTP::Result HTTP::remove(const std::string &url, const std::string &bearer, const std::string &body, const HeaderMap &extra_headers) {
         CURL *curl;
         HTTP:Result result { Spotify::RFC2616_Code::NOT_IMPLEMENTED, "" };
 
@@ -140,10 +152,7 @@ namespace Spotify {
 
         if (!curl) return result;
 
-        curl_slist *headers = NULL;
-        std::string auth = "Authorization: Bearer " + bearer;
-        headers = curl_slist_append(headers, auth.c_str());
-        //headers = curl_slist_append(headers, "User-Agent: spotify-cpp-client");
+        curl_slist *headers = prepareHeaders(bearer, extra_headers);
 
         if (!body.empty()) {
             headers = curl_slist_append(headers, "Content-Type: application/json");
