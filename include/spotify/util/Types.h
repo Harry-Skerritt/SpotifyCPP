@@ -377,6 +377,7 @@ namespace Spotify {
     using PagedPlaylistTrackObject = PagingObject<PlaylistTrackObject>;
     using PagedPlaylistObject = PagingObject<SimplifiedPlaylistObject>;
     using PagedAlbumObject = PagingObject<SimplifiedAlbumObject>;
+    using PagedArtistObject = PagingObject<ArtistObject>;
     using PagedAudiobookObject = PagingObject<SimplifiedAudiobookObject>;
     using PagedCategoryObject = PagingObject<CategoryObject>;
 

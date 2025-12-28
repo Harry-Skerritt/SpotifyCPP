@@ -15,10 +15,10 @@ add_library(SpotifyAPILib STATIC
         src/util/Http.cpp
         src/util/Tools.cpp
         src/util/JsonMapping.cpp
-        src/api/BaseAPI.cpp
         src/api/AlbumAPI.cpp
         src/api/ArtistAPI.cpp
         src/api/AudiobookAPI.cpp
+        src/api/BaseAPI.cpp
         src/api/BrowseAPI.cpp
         src/api/CategoryAPI.cpp
         src/api/ChapterAPI.cpp
@@ -26,6 +26,7 @@ add_library(SpotifyAPILib STATIC
         src/api/PlayerAPI.cpp
         src/api/PlaylistAPI.cpp
         src/api/TrackAPI.cpp
+        src/api/UsersAPI.cpp
 
 
 )
