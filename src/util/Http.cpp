@@ -16,17 +16,21 @@ namespace Spotify {
         return size * nmemb;
     }
 
-    static curl_slist* prepareHeaders(const std::string& bearer, const HTTP::HeaderMap &extra) {
+    static curl_slist* prepareHeaders(const std::string& bearer, const HTTP::HeaderMap &extra, bool is_auth = false) {
         curl_slist* headers = NULL;
 
         std::string auth = "Authorization: Bearer " + bearer;
-        headers = curl_slist_append(headers, auth.c_str());
-        headers = curl_slist_append(headers, "User-Agent: spotify-cpp-client");
+        if (!is_auth) {
+            headers = curl_slist_append(headers, auth.c_str());
+            headers = curl_slist_append(headers, "User-Agent: spotify-cpp-client");
+        }
 
         for (const auto& [key, value] : extra) {
             std::string header_str = key + ": " + value;
             headers = curl_slist_append(headers, header_str.c_str());
         }
+
+
 
         return headers;
     }
@@ -68,7 +72,7 @@ namespace Spotify {
         return result;
     }
 
-    HTTP::Result HTTP::post(const std::string &url, const std::string &bearer, const std::string &body, const HeaderMap &extra_headers) {
+    HTTP::Result HTTP::post(const std::string &url, const std::string &bearer, const std::string &body, const HeaderMap &extra_headers, bool is_auth) {
         CURL *curl;
         HTTP:Result result { Spotify::RFC2616_Code::NOT_IMPLEMENTED, "" };
 
@@ -78,9 +82,9 @@ namespace Spotify {
             throw Spotify::Exception("Failed to initialize CURL handle (System error).");
         }
 
-        curl_slist *headers = prepareHeaders(bearer, extra_headers);
+        curl_slist *headers = prepareHeaders(bearer, extra_headers, is_auth);
 
-        if (!body.empty() && extra_headers.find("Content-Type") == extra_headers.end()) {
+        if (!body.empty() && !extra_headers.contains("Content-Type")) {
             headers = curl_slist_append(headers, "Content-Type: application/json");
         }
 
@@ -126,7 +130,7 @@ namespace Spotify {
 
         curl_slist *headers = prepareHeaders(bearer, extra_headers);
 
-        if (!body.empty() && extra_headers.find("Content-Type") == extra_headers.end()) {
+        if (!body.empty() && !extra_headers.contains("Content-Type")) {
             headers = curl_slist_append(headers, "Content-Type: application/json");
         }
 
@@ -173,7 +177,7 @@ namespace Spotify {
 
         curl_slist *headers = prepareHeaders(bearer, extra_headers);
 
-        if (!body.empty() && extra_headers.find("Content-Type") == extra_headers.end()) {
+        if (!body.empty() && !extra_headers.contains("Content-Type")) {
             headers = curl_slist_append(headers, "Content-Type: application/json");
         }
 

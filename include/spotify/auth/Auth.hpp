@@ -40,7 +40,6 @@ namespace Spotify {
 
         // Getters
         std::string getAccessToken();
-        [[nodiscard]] AuthResponse getAuthResponse() const;
 
         private:
         AuthResponse buildAuthResponse(const std::string& json);
@@ -49,8 +48,11 @@ namespace Spotify {
 
 
         // Vars
-        public:
         private:
+
+        const std::string TOKEN_URL = "https://accounts.spotify.com/api/token";
+        const std::string AUTH_URL = "https://accounts.spotify.com/authorize";
+
         ClientCredentials m_credentials;
         std::string m_redirectUri;
         AuthResponse m_authResponse;

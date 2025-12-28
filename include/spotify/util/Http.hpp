@@ -24,7 +24,7 @@
 
         // for API
         Result get(const std::string& url, const std::string& bearer, const HeaderMap &extra_headers = {});
-        Result post(const std::string& url, const std::string& bearer, const std::string& body,const HeaderMap &extra_headers = {});
+        Result post(const std::string& url, const std::string& bearer, const std::string& body,const HeaderMap &extra_headers = {}, bool is_auth = false);
         Result put (const std::string& url, const std::string& bearer, const std::string& body, const HeaderMap &extra_headers = {});
         Result remove(const std::string& url, const std::string& bearer, const std::string& body,const HeaderMap &extra_headers = {});
 

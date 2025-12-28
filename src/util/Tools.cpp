@@ -37,65 +37,6 @@ namespace Spotify {
         return escaped.str();
     }
 
-    std::string WebTools::extractValue(const std::string &json, const std::string &key) {
-
-        try {
-            auto data = nlohmann::json::parse(json);
-            return data.at(key).get<std::string>();
-
-        } catch (const nlohmann::json::exception& e) {
-            throw Spotify::ParseException("Failed to extract string key '" + key + "': " + std::string(e.what()), json);
-        }
-
-        /*
-        std::string searchKey = "\"" + key + "\":\"";
-        size_t start = json.find(searchKey);
-
-        if (start == std::string::npos) {
-            throw Spotify::ParseException("Key '" + key + "' not found in JSON string.", json);
-        }
-
-        start += searchKey.length();
-        size_t end = json.find("\"", start);
-        return json.substr(start, end - start);
-        */
-    }
-
-    int WebTools::extractIntValue(const std::string &json, const std::string &key) {
-        try {
-            auto data = nlohmann::json::parse(json);
-            return data.at(key).get<int>();
-        } catch (const nlohmann::json::exception& e) {
-            throw Spotify::ParseException("JSON Library Error: " + std::string(e.what()), json);
-        }
-
-        /*
-        std::string searchKey = "\"" + key + "\"";
-        size_t keyPos = json.find(searchKey);
-        if (keyPos == std::string::npos) {
-            throw Spotify::ParseException("Key '" + key + "' not found in JSON string.", json);
-        }
-
-        size_t colonPos = json.find(":", keyPos + searchKey.length());
-        if (colonPos == std::string::npos) {
-            throw Spotify::ParseException("Invalid JSON format: Colon missing after key '" + key + "'.", json);
-        }
-
-        size_t start = json.find_first_of("-0123456789", colonPos);
-        if (start == std::string::npos) {
-            throw Spotify::ParseException("Value for key '" + key + "' is not an integer.", json);
-        }
-
-        size_t end = json.find_first_not_of("0123456789", start);
-
-        std::string valStr = json.substr(start, end - start);
-        try {
-            return std::stoi(valStr);
-        } catch (...) {
-            throw Spotify::ParseException("Failed to convert value '" + valStr + "' to integer for key '" + key + "'.", json);
-        }
-        */
-    }
 
     std::string WebTools::getHttpStatusText(int code)
     {

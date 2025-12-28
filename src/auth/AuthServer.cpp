@@ -23,7 +23,12 @@ namespace Spotify {
         }
     }
 
-    std::string AuthServer::waitForCode(const std::string &auth_url, int port, const std::optional<std::filesystem::path> &html_file_path) {
+    std::string AuthServer::waitForCode(
+        const std::string &auth_url,
+        int port,
+        const std::optional<std::filesystem::path> &html_file_path,
+        bool suppress)
+    {
         httplib::Server server;
         std::string captured_code;
 
@@ -51,7 +56,9 @@ namespace Spotify {
             }
         });
 
-        std::cout << "Waiting for response on " << auth_url << ":" << port << "..." << std::endl;
+        if (!suppress)
+            std::cout << "Waiting for response on " << auth_url << ":" << port << "..." << std::endl;
+
         if (!server.listen(auth_url, port)) {
             throw Spotify::NetworkException("AuthServer failed to bind to port " + std::to_string(port) +
                                       ". Is the port already in use?");

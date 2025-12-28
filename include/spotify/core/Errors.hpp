@@ -129,21 +129,31 @@ namespace Spotify {
             try {
                 auto j = nlohmann::json::parse(result.body);
 
-                Spotify::ErrorDetails details {
-                    static_cast<int>(result.code),
-                    j["error"]["message"].get<std::string>(),
-                    j["error"].value("reason", "UNKNOWN_REASON")
-                };
+                if (j.is_object() && j.contains("error")) {
+                    auto error_obj = j["error"];
 
-                if (result.code == RFC2616_Code::TOO_MANY_REQUESTS) {
-                    throw Spotify::RateLimitException(details, 30);
+                    std::string msg = error_obj.is_string()
+                              ? error_obj.get<std::string>()
+                              : error_obj.value("message", "Unknown API Error");
+
+                    Spotify::ErrorDetails details {
+                        code,
+                        msg,
+                        j.value("reason", "UNKNOWN_REASON")
+                    };
+
+                    if (result.code == RFC2616_Code::TOO_MANY_REQUESTS) {
+                        throw Spotify::RateLimitException(details, 30);
+                    }
+                    throw Spotify::APIException(details);
                 }
 
-                throw Spotify::APIException(details);
+                throw Spotify::ParseException("Unexpected JSON format: " + j.dump(), result.body);
 
             } catch (const nlohmann::json::parse_error& e) {
-                std::string error_msg = "Failed to parse Spotify response. JSON Error: " + std::string(e.what());
-                throw Spotify::ParseException(error_msg, result.body);
+                throw Spotify::ParseException("Non-JSON response: " + result.body, result.body);
+            } catch (const nlohmann::json::type_error& e) {
+                throw Spotify::ParseException("JSON Type Mismatch: " + std::string(e.what()), result.body);
             }
 
         }

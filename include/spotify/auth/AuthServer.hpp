@@ -15,7 +15,7 @@
 namespace Spotify {
     class AuthServer {
         public:
-        static std::string waitForCode(const std::string &auth_url, int port = 8888, const std::optional<std::filesystem::path> &html_file_path = std::nullopt);
+        static std::string waitForCode(const std::string &auth_url, int port = 8888, const std::optional<std::filesystem::path> &html_file_path = std::nullopt, bool suppress = false);
         static void openBrowser(const std::string& url);
 
     };

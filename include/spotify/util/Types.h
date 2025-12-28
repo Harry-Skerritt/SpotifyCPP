@@ -18,17 +18,6 @@ namespace Spotify {
         std::string client_secret;
     };
 
-    /*
-    enum ResponseCode {
-        SUCCESS,
-        NETWORK_ERROR,
-        AUTH_ERROR,
-        PARSE_ERROR,
-        VALUE_ERROR,
-        UNKNOWN_ERROR
-    };
-    */
-
     enum class RFC2616_Code {
         OK = 200,
         CREATED = 201,
