@@ -24,7 +24,7 @@ namespace Spotify {
         // GET
         [[nodiscard]] std::optional<PlaylistObject> getPlaylist(const std::string& playlist_id, const std::optional<std::string>& market = std::nullopt,
             const std::optional<std::string>& fields = std::nullopt,  const std::optional<AdditionalType>& additional_types = std::nullopt) const;
-        [[nodiscard]] std::optional<PagedTrackObject> getPlaylistItems(const std::string& playlist_id, const std::optional<std::string>& market = std::nullopt,
+        [[nodiscard]] std::optional<PagedPlaylistTrackObject> getPlaylistItems(const std::string& playlist_id, const std::optional<std::string>& market = std::nullopt,
             const std::optional<std::string>& fields = std::nullopt, const std::optional<int>& limit = std::nullopt, const std::optional<int>& offset = std::nullopt,
             const std::optional<AdditionalType>& additional_types = std::nullopt) const;
         [[nodiscard]] std::optional<PagedPlaylistObject> getCurrentUsersPlaylists(const std::optional<int>& limit = std::nullopt, const std::optional<int>& offset = std::nullopt) const;
@@ -39,7 +39,7 @@ namespace Spotify {
 
         // POST
         void addItemsToPlaylist(const std::string& playlist_id, const std::vector<std::string>& uris, const std::optional<int>& position = std::nullopt) const;
-        void createPlaylist(const std::string& user_id, const std::string& name, const std::optional<bool>& is_public = std::nullopt, const std::optional<bool>& is_collaborative = std::nullopt, const std::optional<std::string>& description = std::nullopt) const;
+        std::optional<PlaylistObject> createPlaylist(const std::string& user_id, const std::string& name, const std::optional<bool>& is_public = std::nullopt, const std::optional<bool>& is_collaborative = std::nullopt, const std::optional<std::string>& description = std::nullopt) const;
 
         // DELETE
         void removePlaylistItems(const std::string& playlist_id, const std::vector<URIObject>& tracks, const std::optional<std::string>& snapshot_id = std::nullopt) const;

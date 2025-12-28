@@ -6,8 +6,6 @@
 
 #include "spotify/api/PlaylistAPI.hpp"
 
-#include <regex>
-
 #include "nlohmann/json.hpp"
 #include "spotify/core/Client.hpp"
 #include "spotify/util/Http.hpp"
@@ -50,7 +48,7 @@ namespace Spotify {
         return fetchAndParse<PlaylistObject>(url);
     }
 
-    std::optional<PagedTrackObject> PlaylistAPI::getPlaylistItems(
+    std::optional<PagedPlaylistTrackObject> PlaylistAPI::getPlaylistItems(
         const std::string &playlist_id,
         const std::optional<std::string> &market,
         const std::optional<std::string>& fields,
@@ -91,7 +89,7 @@ namespace Spotify {
             }
         }
 
-        return fetchAndParse<PagedTrackObject>(url);
+        return fetchAndParse<PagedPlaylistTrackObject>(url);
     }
 
     std::optional<PagedPlaylistObject> PlaylistAPI::getCurrentUsersPlaylists(
@@ -232,6 +230,8 @@ namespace Spotify {
         const std::string &playlist_id,
         const std::string &image) const
     {
+        // Todo:
+        // Needs to take in an image and override headers
         std::string url = BASE_PLAYLIST_URL + "/" + playlist_id + "/images";
 
         nlohmann::json j;
@@ -248,19 +248,33 @@ namespace Spotify {
         const std::optional<int> &position) const {
         std::string url = BASE_PLAYLIST_URL + "/" + playlist_id + "/tracks";
 
-        std::string uri_list = Tools::toCSV(uris, 1, 100);
+        if (uris.size() > 100 || uris.size() < 1) {
+            std::cerr << "Error: You must provide between 1 and 100 URIs" << std::endl;
+            return;
+        }
 
         nlohmann::json j;
-        j["uris"] = uri_list;
+
+        nlohmann::json uri_array = nlohmann::json::array();
+        for (const auto &uri : uris) {
+            uri_array.push_back(uri );
+        }
+
+        j["uris"] = uri_array;
 
         if (position.has_value())
             j["position"] = *position;
 
-        sendAction("POST", url, j.dump());
+        std::cout << j.dump() << std::endl;
+
+        auto body = sendAction("POST", url, j.dump());
+        if (body.has_value()) {
+            std::cout << body.value() << std::endl;
+        }
     }
 
 
-    void PlaylistAPI::createPlaylist(
+    std::optional<PlaylistObject> PlaylistAPI::createPlaylist(
         const std::string &user_id,
         const std::string &name,
         const std::optional<bool> &is_public,
@@ -281,8 +295,20 @@ namespace Spotify {
         if (description.has_value() && !description->empty())
             j["description"] = *description;
 
-        sendAction("POST", url, j.dump());
+        auto body = sendAction("POST", url, j.dump());
 
+        if (body.has_value()) {
+            try {
+                auto data = nlohmann::json::parse(*body);
+
+                return data.get<PlaylistObject>();
+            } catch (const std::exception& e) {
+                std::cerr << "JSON Mapping Error: " << e.what() << std::endl;
+                return std::nullopt;
+            }
+        }
+
+        return std::nullopt;
     }
 
 

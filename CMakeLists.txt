@@ -229,6 +229,36 @@ target_link_libraries(example_addToQueue PRIVATE SpotifyAPILib)
 set_example_output_dir(example_addToQueue "player")
 
 
+
+# --- Playlist Examples ---
+add_executable(example_getPlaylist examples/playlists/getPlaylistExample.cpp)
+target_link_libraries(example_getPlaylist PRIVATE SpotifyAPILib)
+set_example_output_dir(example_getPlaylist "playlist")
+
+add_executable(example_createAndManipulate examples/playlists/createAndManipulatePlaylistExample.cpp)
+target_link_libraries(example_createAndManipulate PRIVATE SpotifyAPILib)
+set_example_output_dir(example_createAndManipulate "playlist")
+
+add_executable(example_getCurrentUsersPlaylist examples/playlists/getCurrentUsersPlaylistsExample.cpp)
+target_link_libraries(example_getCurrentUsersPlaylist PRIVATE SpotifyAPILib)
+set_example_output_dir(example_getCurrentUsersPlaylist "playlist")
+
+add_executable(example_getUsersPlaylist examples/playlists/getUsersPlaylistsExample.cpp)
+target_link_libraries(example_getUsersPlaylist PRIVATE SpotifyAPILib)
+set_example_output_dir(example_getUsersPlaylist "playlist")
+
+add_executable(example_getPlaylistItems examples/playlists/getPlaylistItemsExamples.cpp)
+target_link_libraries(example_getPlaylistItems PRIVATE SpotifyAPILib)
+set_example_output_dir(example_getPlaylistItems "playlist")
+
+add_executable(example_getPlaylistCover examples/playlists/getPlaylistCoverExample.cpp)
+target_link_libraries(example_getPlaylistCover PRIVATE SpotifyAPILib)
+set_example_output_dir(example_getPlaylistCover "playlist")
+
+
+
+
+
 # --- Track Examples ---
 add_executable(example_getTrack examples/tracks/getTrackExample.cpp)
 target_link_libraries(example_getTrack PRIVATE SpotifyAPILib)
