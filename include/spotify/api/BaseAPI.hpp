@@ -9,10 +9,13 @@
 #include <optional>
 #include <string>
 #include <iostream>
-#include "nlohmann/json.hpp"
+
 #include "spotify/core/Errors.hpp"
 #include "spotify/util/Http.hpp"
 #include "spotify/util/Tools.hpp"
+#include "spotify/util/JsonMapping.hpp"
+
+#include "nlohmann/json.hpp"
 
 namespace Spotify {
     class Client;
@@ -25,10 +28,9 @@ namespace Spotify {
 
 
         // --- GET + Parse Helper ---
-        // Todo: Stop this returning an optional and change ALL apis
         template <typename T>
         T fetchAndParse(const std::string& url, const std::string& wrapperKey = "") const {
-            if (!m_client) return std::nullopt;
+            if (!m_client) throw std::runtime_error("SpotifyAPI: Attempted to fetch data without an initialized HTTP client.");
 
             std::string token = tryGetAccessToken();
             auto result = HTTP::get(url, token);

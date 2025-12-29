@@ -2,10 +2,10 @@
 
 # Todo:
 * Add endpoint examples for ShowsAPI
-* Clean up Types.h
+* ~~Clean up Types.h~~
 * ~~Clean up includes in .hpps~~
 * ~~Ensure #pragma once in place for headers~~
-* Ensure #pgrama once in place elsewhere
+* ~~Ensure #pgrama once in place elsewhere~~
 * Check code is as optimised as can be for now
 * ~~Neaten everything up in API headers~~
 * Neaten everything up elsewhere

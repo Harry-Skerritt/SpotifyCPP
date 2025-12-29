@@ -77,7 +77,7 @@ set_example_output_dir(example_authServer "endpoints" "auth")
 #Copy the HTML file to the same folder as the binaries
 configure_file(
         "examples/endpoints/auth/index.html"
-        "${CMAKE_BINARY_DIR}/examples/auth/index.html"
+        "${CMAKE_BINARY_DIR}/examples/endpoints/auth/index.html"
         COPYONLY
 )
 

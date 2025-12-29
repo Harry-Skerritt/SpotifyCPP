@@ -83,7 +83,7 @@ namespace Spotify {
     }
 
     // --- PUT ---
-    void EpisodeAPI::saveEpisodeForUser(const std::vector<std::string>& &ids) const {
+    void EpisodeAPI::saveEpisodeForUser(const std::vector<std::string>& ids) const {
 
         std::string id_list = Tools::toCSV(ids, 0, 50);
 
@@ -93,7 +93,7 @@ namespace Spotify {
     }
 
     // --- DELETE --
-    void EpisodeAPI::removeUserSavedEpisodes(const std::vector<std::string>& &ids) const {
+    void EpisodeAPI::removeUserSavedEpisodes(const std::vector<std::string>& ids) const {
 
         std::string id_list = Tools::toCSV(ids, 0, 50);
 
