@@ -14,19 +14,17 @@ int main () {
 
     auto devices = client.player().getAvailableDevices();
 
-    // Todo: Add this back
-    /*
-    if (!devices.has_value()) {
-        std::cerr << "No player found!" << std::endl;
-        return 1;
+    if (devices.devices.empty()) {
+        std::cout << "No active Spotify devices found. Open Spotify on a device to see it here." << std::endl;
+        return 0;
     }
-    */
 
-    std::cout << "   * " << devices.devices.size() << " Available Devices *   " << std::endl;
+    std::cout << "\n   * " << devices.devices.size() << " Available Devices *   " << std::endl;
     std::cout << "-----------------------------" << std::endl;
 
     for (const auto& device : devices.devices) {
-        std::cout << device.name << std::endl;
+        std::string activeStatus = device.is_active ? " (Active)" : "";
+        std::cout << "- " << device.name << " [" << device.type << "]" << activeStatus << std::endl;
     }
 
     return 0;

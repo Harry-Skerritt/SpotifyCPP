@@ -13,7 +13,7 @@
 namespace Spotify {
 
     // --- GET ---
-    PlaybackObject PlayerAPI::getPlaybackState(
+    std::optional<PlaybackObject> PlayerAPI::getPlaybackState(
         const std::optional<std::string> &market,
         const std::optional<std::string> &additional_types ) const
     {
@@ -40,7 +40,7 @@ namespace Spotify {
         }
 
 
-        return fetchAndParse<PlaybackObject>(url);
+        return fetchAndParseOptional<PlaybackObject>(url);
     }
 
     DeviceListObject PlayerAPI::getAvailableDevices() const {
@@ -50,7 +50,7 @@ namespace Spotify {
         return fetchAndParse<DeviceListObject>(url);
     }
 
-    PlaybackObject PlayerAPI::getCurrentlyPlayingTrack(
+    std::optional<PlaybackObject> PlayerAPI::getCurrentlyPlayingTrack(
         const std::optional<std::string> &market,
         const std::optional<std::string> &additional_types) const
     {
@@ -77,7 +77,7 @@ namespace Spotify {
         }
 
 
-        return fetchAndParse<PlaybackObject>(url);
+        return fetchAndParseOptional<PlaybackObject>(url);
     }
 
     RecentlyPlayedTracksObject PlayerAPI::getRecentlyPlayedTracks(

@@ -25,7 +25,7 @@ namespace Spotify {
         /// @param market ISO 3166-1 country code (optional)
         /// @param additional_types The type of item to return (optional)
         /// @note Requires @c user-read-playback-state scope
-        [[nodiscard]] PlaybackObject getPlaybackState(
+        [[nodiscard]] std::optional<PlaybackObject> getPlaybackState(
             const std::optional<std::string> &market = std::nullopt,
             const std::optional<std::string> &additional_types = std::nullopt
         ) const;
@@ -38,7 +38,7 @@ namespace Spotify {
         /// @param market ISO 3166-1 country code (optional)
         /// @param additional_types Item type to return (optional)
         /// @note Requires @c user-read-currently-playing scope
-        [[nodiscard]] PlaybackObject getCurrentlyPlayingTrack(
+        [[nodiscard]] std::optional<PlaybackObject> getCurrentlyPlayingTrack(
             const std::optional<std::string> &market = std::nullopt,
             const std::optional<std::string> &additional_types = std::nullopt
         ) const;

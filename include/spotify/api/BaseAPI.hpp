@@ -30,17 +30,26 @@ namespace Spotify {
         // --- GET + Parse Helper ---
         template <typename T>
         T fetchAndParse(const std::string& url, const std::string& wrapperKey = "") const {
+            auto result = fetchAndParseOptional<T>(url, wrapperKey);
+            if (!result.has_value()) {
+                throw Spotify::ParseException("API returned 204 No Content or empty body where data was expected.", "");
+            }
+            return *result;
+        }
+
+        template <typename T>
+        std::optional<T> fetchAndParseOptional(const std::string& url, const std::string& wrapperKey = "") const {
             if (!m_client) throw std::runtime_error("SpotifyAPI: Attempted to fetch data without an initialized HTTP client.");
 
             std::string token = tryGetAccessToken();
             auto result = HTTP::get(url, token);
 
+            if (result.code == RFC2616_Code::NO_CONTENT || (result.code == RFC2616_Code::OK && result.body.empty())) {
+                return std::nullopt;
+            }
+
             // Error Handling
             ErrorHandler::verifyResponse(result);
-
-            if (result.body.empty()) {
-                throw Spotify::ParseException("API returned success (200) but body was empty.", "");
-            }
 
             try {
                 auto data = nlohmann::json::parse(result.body);

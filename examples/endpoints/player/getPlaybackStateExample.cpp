@@ -21,20 +21,17 @@ int main () {
     auto state = client.player().getPlaybackState();
 
 
-    // Todo: Add this back
-    /*
     if (!state.has_value()) {
         std::cout << "Nothing is playing (or private session is active)." << std::endl;
         return 0;
     }
-    */
 
     std::cout << "\n\n      * Playback State *      " << std::endl;
     std::cout << "------------------------------" << std::endl;
 
-    std::cout << "Current Device: " << state.device.name << std::endl;
-    std::cout << "Current Track href: " << state.context.href << std::endl;
-    std::cout << "Current Track is: " << state.asTrack()->name << " by " << state.asTrack()->artists.at(0).name << std::endl;
+    std::cout << "Current Device: " << state->device.name << std::endl;
+    std::cout << "Current Track href: " << state->context.href << std::endl;
+    std::cout << "Current Track is: " << state->asTrack()->name << " by " << state->asTrack()->artists.at(0).name << std::endl;
 
     return 0;
 }
