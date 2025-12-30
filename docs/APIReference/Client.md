@@ -73,9 +73,9 @@ auto token = client.getAccessToken();
 
 ## Errors
 Methods accessed through Client may throw:
-- [APIException]() — Spotify API error
-- [NetworkException]() — Network failure
-- [LogicException]() — Invalid library state
+- [`APIException`](/docs/Exceptions.md#spotifyapiexception) — Spotify API error
+- [`NetworkException`](/docs/Exceptions.md#spotifynetworkexception) — Network failure
+- [`LogicException`](/docs/Exceptions.md#spotifylogicexception) — Invalid library state
 
 These exceptions originate from the underlying endpoint APIs.
 
