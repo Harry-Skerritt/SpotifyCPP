@@ -18,11 +18,12 @@ int main () {
     auto pb = client.player().getCurrentlyPlayingTrack();
 
 
-    // Todo: Add this back?
     if (!pb.has_value()) {
         std::cout << "Nothing is playing (or private session is active)." << std::endl;
         return 0;
     }
+
+
 
     if (pb->asTrack() != nullptr) {
         const auto track = pb->asTrack();

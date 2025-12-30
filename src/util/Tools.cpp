@@ -146,5 +146,16 @@ namespace Spotify {
         return std::format("{:%FT%TZ}", std::chrono::floor<std::chrono::seconds>(now));
     }
 
+
+    std::string Tools::formatMs(long long ms) {
+        auto dur = std::chrono::milliseconds(ms);
+        auto mins = std::chrono::duration_cast<std::chrono::minutes>(dur).count();
+        auto secs = std::chrono::duration_cast<std::chrono::seconds>(dur).count() % 60;
+
+        std::ostringstream oss;
+        oss << mins << ":" << std::setw(2) << std::setfill('0') << secs;
+        return oss.str();
+    }
+
 }
 

@@ -35,6 +35,16 @@ namespace Spotify::Tools {
     bool inRange(int test_case, int low, int high);
     std::string toCSV(std::vector<std::string> ids, int min_qty = 0, int max_qty = 10);
     bool isValidMarket(std::string market);
+
+    /// @brief Creates an ISO 8601 formatted timestamp
+    /// Example: 2023-01-15T14:30:00Z
+    std::string getISOTimestamp();
+
+    /// @brief Formats milliseconds into a "M:SS" string.
+    /// Example: 185000ms -> "3:05"
+    /// @param ms Time in milliseconds
+    std::string formatMs(long long ms);
+
     // Vars
     inline std::string valid_markets[185] = {
         "AD","AE","AG","AL","AM","AO","AR","AT","AU","AZ",
@@ -57,8 +67,6 @@ namespace Spotify::Tools {
         "TZ","UA","UG","US","UY","UZ","VC","VE","VN","VU",
         "WS","XK","ZA","ZM","ZW"
     };
-
-    std::string getISOTimestamp();
 }
 
 

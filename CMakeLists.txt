@@ -47,8 +47,6 @@ target_link_libraries(SpotifyAPILib PRIVATE
         Threads::Threads
 )
 
-
-# --- Examples ---
 # --- Helper to put binaries in the right subfolder ---
 function(set_example_output_dir TARGET_NAME CATEGORY SUBFOLDER)
     set_target_properties(${TARGET_NAME} PROPERTIES
@@ -65,6 +63,13 @@ function(set_example_output_dir TARGET_NAME CATEGORY SUBFOLDER)
     endif()
 endfunction()
 
+
+# --- Real World Examples
+add_executable(example_nowPlaying examples/realworld/now_playing.cpp)
+target_link_libraries(example_nowPlaying PRIVATE SpotifyAPILib)
+set_example_output_dir(example_nowPlaying "realworld" "now_playing")
+
+# --- Endpoint Examples ---
 # --- Auth Examples ---
 add_executable(example_authManual examples/endpoints/auth/authManualExample.cpp)
 target_link_libraries(example_authManual PRIVATE SpotifyAPILib)

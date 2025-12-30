@@ -2,7 +2,7 @@
 
 # Todo:
 * ~~Fix endpoint examples~~
-* ~Add back the not playing handler~
+* ~~Add back the not playing handler~~
 * Add endpoint examples for ShowsAPI
 * ~~Clean up Types.h~~
 * ~~Clean up includes in .hpps~~
