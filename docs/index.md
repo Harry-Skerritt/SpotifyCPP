@@ -1,5 +1,9 @@
 # Spotify API Lib - Documentation
 
+Below is the table of contents leading to information about the classes, functions and data models within this library.
+
+***Note: Some of the docs have been written with the help from GenAI** (The plan is forthem to be rewritten)*
+
 ---
 
 ## Getting Started
@@ -8,7 +12,17 @@
 |-------------------------|----------------------------------------|-------------------------------------------|
 | Getting Started Guide   | Quickstart guide for using the library | [Link](/docs/Tutorials/GettingStarted.md) |
 | Authentication          | How to authenticate with Spotify       | [Link](/docs/Tutorials/Authentication.md) |
-| Exceptions              | Overview of library exceptions         | [Link](/docs/Exceptions.md)               |
+| Exceptions              | Overview of library exceptions         | [Link](/docs/Tutorials/Exceptions.md)     |
+
+---
+
+## Auth
+
+| Class      | Description                                 | Link                             |
+|------------|---------------------------------------------|----------------------------------|
+| Auth       | The main functions of the OAuth2 flow       | [Link](/docs/Auth/Auth.md)       |
+| AuthServer | Helper class to make the OAuth2 flow easier | [Link](/docs/Auth/AuthServer.md) |
+
 
 ---
 
