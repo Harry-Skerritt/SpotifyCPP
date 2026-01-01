@@ -55,7 +55,7 @@ The authorization code is not yet an access token, however the one line of code 
 auth.exchangeCode(code);
 ```
 
-*See more on [`AuthResponse`](/docs/Types/AuthResponse.md)*
+*See more on [`AuthResponse`](/docs/Types/Scope.md)*
 
 
 ## Step 4 - Refreshing Access Token

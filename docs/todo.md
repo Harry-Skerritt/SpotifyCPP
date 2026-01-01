@@ -12,7 +12,7 @@
 * ~~Add Doxygen docs to .hpps~~
 * ~~Ensure all necessary tools are in place~~
 * Add .md docs for more details
-* Add real-world examples alongside the endpoint ones
+* ~~Add real-world examples alongside the endpoint ones~~
 * ~~Add helpers for getting IDs and URIs from URls~~
 * Add README.md
 * ~~Add License~~
