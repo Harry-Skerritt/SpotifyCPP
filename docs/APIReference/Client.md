@@ -81,7 +81,7 @@ These exceptions originate from the underlying endpoint APIs.
 
 
 ## See Also:
-- [Authentication](/docs/Authentication.md)
+- [Authentication](/docs/Tutorials/Authentication.md)
 - [Album API](/docs/APIReference/AlbumAPI.md)
 - [Player API](/docs/APIReference/PlayerAPI.md)
 - [Exceptions](/docs/Exceptions.md)

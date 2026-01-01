@@ -44,7 +44,7 @@ std::string code = Spotify::AuthServer::waitForCode("127.0.0.1", 8888);
 
 The `waitForCode` function will return the code
 
-*See more on [`AuthServer`](/docs/AuthServer.md)*
+*See more on [`AuthServer`](/docs/Auth/AuthServer.md)*
 
 ## Step 3 - Exchange the Code
 

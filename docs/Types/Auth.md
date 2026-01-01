@@ -39,5 +39,5 @@ Represents the response from Spotify when exchanging an authorization code or re
 
 ### See Also
 
-- [Authentication](/docs/Authentication.md)
+- [Authentication](/docs/Tutorials/Authentication.md)
 - [Tools](/docs/Utilities/Tools.md)

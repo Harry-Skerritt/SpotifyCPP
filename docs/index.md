@@ -4,11 +4,11 @@
 
 ## Getting Started
 
-| Topic | Description | Link |
-|-------|-------------|------|
-| Getting Started Guide | Quickstart guide for using the library | [Link](/docs/GettingStarted.md) |
-| Authentication | How to authenticate with Spotify | [Link](/docs/Authentication.md) |
-| Exceptions | Overview of library exceptions | [Link](/docs/Exceptions.md) |
+| Topic                   | Description                            | Link                                      |
+|-------------------------|----------------------------------------|-------------------------------------------|
+| Getting Started Guide   | Quickstart guide for using the library | [Link](/docs/Tutorials/GettingStarted.md) |
+| Authentication          | How to authenticate with Spotify       | [Link](/docs/Tutorials/Authentication.md) |
+| Exceptions              | Overview of library exceptions         | [Link](/docs/Exceptions.md)               |
 
 ---
 

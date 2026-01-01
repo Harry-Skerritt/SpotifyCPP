@@ -40,4 +40,4 @@ Spotify::Auth auth({client_key, client_secret});
 ## Step 3 - Authorisation
 Once your credentials are loaded, you can authorize your application.
 
-Follow the full authorization flow documentation here: [Authentication](/docs/Authentication.md)
+Follow the full authorization flow documentation here: [Authentication](/docs/Tutorials/Authentication.md)

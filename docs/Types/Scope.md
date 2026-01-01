@@ -38,4 +38,4 @@ In C++, each scope is available as a typed constant under `Scope::`, e.g., `Scop
 | `Scope::SOACreatePartner`          | soa-create-partner          | Create new partners, platform partners only                                                                                                |
 
 ## See Also
-- [Authentication](/docs/Authentication.md)
+- [Authentication](/docs/Tutorials/Authentication.md)

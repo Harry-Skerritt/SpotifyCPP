@@ -224,6 +224,6 @@ catch (const std::exception& e) {
 ```
 
 ## See Also
-- [Authentication](/docs/Authentication.md)
+- [Authentication](/docs/Tutorials/Authentication.md)
 - [Client](/docs/APIReference/Client.md)
 - [Parsing Utilities](/docs/Utilities/Parsing.md)

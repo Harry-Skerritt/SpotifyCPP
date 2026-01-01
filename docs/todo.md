@@ -19,6 +19,7 @@
 * Deploy 1.0.0
 
 # To Add:
+- Work on converting docs from AI generated to Human
 
 # 1.1.0
 * Add custom endpoints for custom functionality
