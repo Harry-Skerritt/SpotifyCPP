@@ -46,10 +46,11 @@ namespace Spotify {
             url += "&offset=" + std::to_string(*offset);
         }
 
-        if (include_external && include_external == "audio")
-            url += "&include_external=audio";
-        else
-            throw LogicException("include_external can only be equal to 'audio'");
+        if (include_external)
+            if (include_external == "audio")
+                url += "&include_external=audio";
+            else
+                throw LogicException("include_external can only be equal to 'audio'");
 
         return fetchAndParse<SearchObject>(url);
 

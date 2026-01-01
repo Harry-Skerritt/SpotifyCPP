@@ -77,6 +77,10 @@ add_executable(example_topItems examples/realworld/top_items.cpp)
 target_link_libraries(example_topItems PRIVATE SpotifyAPILib)
 set_example_output_dir(example_topItems "realworld" "top_items")
 
+add_executable(example_Search examples/realworld/search.cpp)
+target_link_libraries(example_Search PRIVATE SpotifyAPILib)
+set_example_output_dir(example_Search "realworld" "search")
+
 # --- Endpoint Examples ---
 # --- Auth Examples ---
 add_executable(example_authManual examples/endpoints/auth/authManualExample.cpp)
@@ -162,9 +166,9 @@ add_executable(example_getAvailableMarkets examples/endpoints/browse/getAvailabl
 target_link_libraries(example_getAvailableMarkets PRIVATE SpotifyAPILib)
 set_example_output_dir(example_getAvailableMarkets "endpoints" "browse")
 
-add_executable(example_Search examples/endpoints/browse/searchExample.cpp)
-target_link_libraries(example_Search PRIVATE SpotifyAPILib)
-set_example_output_dir(example_Search "endpoints" "browse")
+add_executable(example_SearchEndpoint examples/endpoints/browse/searchExample.cpp)
+target_link_libraries(example_SearchEndpoint PRIVATE SpotifyAPILib)
+set_example_output_dir(example_SearchEndpoint "endpoints" "browse")
 
 
 
