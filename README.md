@@ -19,6 +19,15 @@ Built for developers who want a "no-nonsense" interface to Spotify without the o
 
 ---
 
+## Current Version: v0.9.0
+
+### What will be in v1.0.0
+- Documentation needs finalising
+- Some data types need fully implementing
+- Final tests
+
+---
+
 ## Built With
 
 - **[nlohmann/json](https://github.com/nlohmann/json)** - The "JSON for Modern C++" library. We use this for all JSON parsing and serialization. Its intuitive syntax allowed us to keep the library codebase clean and maintainable.
