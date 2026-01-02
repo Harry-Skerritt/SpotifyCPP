@@ -1,5 +1,7 @@
 # SpotifyCPP
 
+[![PlatformIO Registry](https://badges.registry.platformio.org/packages/harryskerritt/library/SpotifyCPP.svg)](https://registry.platformio.org/libraries/harryskerritt/SpotifyCPP)
+
 A modern, high-performance **C++ library for the Spotify Web API**. Designed to be lightweight and intuitive, this library provides comprehensive access to Spotify's ecosystem—from catalog metadata to real-time player controls.
 
 Built for developers who want a "no-nonsense" interface to Spotify without the overhead of heavy frameworks.
@@ -64,11 +66,45 @@ cmake ..
 make
 ```
 
-### Platform.IO
-***Coming Soon***
+### CMake FetchContent
+Include in CMakeLists.txt
+```text
+include(FetchContent)
 
-### Homebrew
-***Coming Soon***
+FetchContent_Declare(
+    SpotifyCPP
+    GIT_REPOSITORY https://github.com/Harry-Skerritt/SpotifyCpp.git
+    GIT_TAG v0.9.0
+)
+
+FetchContent_MakeAvailable(SpotifyCPP)
+
+...
+
+target_link_libraries(MyApp PRIVATE SpotifyCPP::SpotifyCPP)
+```
+
+
+### Platform.IO
+
+1. Open `platformio.ini`,  a project configuration file located in the root of PlatformIO project.
+2. Add the following line to the `lib_deps` option of `[env:]` section:
+
+```bash
+  harryskerritt/SpotifyCPP@^0.9.0
+```
+
+3. Build a project, PlatformIO will automatically install dependencies.
+
+### PlatformIO Core CLI
+
+1. Open PlatformIO Core CLI
+2. Change directory (cd) to the PlatformIO project where platformio.ini is located.
+3. Copy the following pio pkg install command and paste into the CLI shell, press Enter:
+```bash
+    pio pkg install --library "harryskerritt/SpotifyCPP@^0.9.0"
+```
+
 
 ---
 
