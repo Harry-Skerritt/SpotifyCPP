@@ -57,6 +57,19 @@ It is also easy to get started with: [Getting Started](/docs/Tutorials/GettingSt
 - `libcurl` installed on your system.
 - `CMake` 3.15 or higher.
 
+### Including in project
+
+SpotifyCPP library provides the following header files that can be included in your project:
+
+`spotify.hpp`
+
+```c++
+#include <spotify/spotify.hpp>
+```
+
+---
+
+
 ### Building from Source
 ```bash
 git clone https://github.com/Harry-Skerritt/SpotifyAPILib.git
