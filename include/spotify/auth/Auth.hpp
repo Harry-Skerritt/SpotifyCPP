@@ -48,10 +48,25 @@ namespace Spotify {
         /// @param refresh_token Optional refresh token to use instead of the stored one
         void refreshAccessToken(const std::optional<std::string>& refresh_token = std::nullopt);
 
+        /// @brief Initializes the library using an existing refresh token.
+        /// This method attempts a "silent login" by using a previously stored refresh token.
+        /// It updates the internal state with the provided token and immediately attempts
+        /// to exchange it for a fresh access token from Spotify.
+        /// @note If successful, the internal access token, expiry time, and potentially
+        /// a rotated refresh token are updated automatically.
+        /// @note This method is non-throwing; any network or authorization errors result
+        /// in a return value of false.
+        /// @param refreshToken A valid Spotify refresh token string
+        /// @return true If the token was accepted and a new access token was successfully fetched.
+        /// @return false If the refresh token is empty, expired, revoked, or a network error occurred.
+        bool begin(const std::string& refreshToken);
 
         // Getters
         /// Returns the current access token
         std::string getAccessToken();
+
+        /// Returns the current refresh token
+        std::string getRefreshToken();
 
         private:
         AuthResponse buildAuthResponse(const std::string& json);

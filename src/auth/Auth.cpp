@@ -73,12 +73,31 @@ namespace Spotify {
         buildAuthResponse(result.body);
     }
 
+    bool Auth::begin(const std::string& refresh_token) {
+        if (refresh_token.empty()) return false;
+
+        m_refresh_token = refresh_token;
+
+        try {
+            refreshAccessToken();
+            return true;
+
+        } catch (const Spotify::Exception& e) {
+            std::cerr << "Could not validate refresh token" << std::endl;
+            return false;
+        }
+    }
+
     // Getters
     std::string Auth::getAccessToken() {
         if (isTokenExpired()) {
             refreshAccessToken();
         }
         return m_authResponse.access_token;
+    }
+
+    std::string Auth::getRefreshToken() {
+        return m_refresh_token;
     }
 
 

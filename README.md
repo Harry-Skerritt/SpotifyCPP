@@ -21,7 +21,11 @@ Built for developers who want a "no-nonsense" interface to Spotify without the o
 
 ---
 
-## Current Version: v0.9.2
+## Current Version: v0.9.3
+
+### v0.9.2 -> v0.9.3
+- Added a `begin` function which allows a silent login to continue sessions
+- Added a `getRefreshToken` function to acompany this
 
 ### What will be in v1.0.0
 - Documentation needs finalising
