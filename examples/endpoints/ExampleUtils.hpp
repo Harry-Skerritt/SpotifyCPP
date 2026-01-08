@@ -18,7 +18,7 @@ namespace Spotify {
                 std::cout << "--------------------------------------------" << "\n" << std::endl;
 
                 // Load Env
-                std::string env_path = "/Volumes/Data/Code/C++/2025/SpotifyAPILib/.env";
+                std::string env_path = "/Volumes/Data/Code/C++/2025/SpotifyCPP/.env";
                 Tools::loadEnv(env_path);
 
                 const char* client_key = std::getenv("SPOTIFY_CLIENT_KEY");

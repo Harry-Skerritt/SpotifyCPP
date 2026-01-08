@@ -7,6 +7,8 @@
 
 #include <cstdlib>
 
+#include "spotify/extensions/VisualAPI.hpp"
+
 
 int main () {
 
@@ -35,6 +37,7 @@ int main () {
         std::cout << pb->progress_ms << "ms / " << track->duration_ms << "ms" << std::endl;
         std::cout << "(" << height.value_or(0) << "x" << width.value_or(0) << "): "
                     << url << std::endl;
+        std::cout << "Playing on: " << pb->device.name << std::endl;
     }
 
 

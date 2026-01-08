@@ -13,7 +13,8 @@ int main () {
     Spotify::Client client(auth);
 
     // Single Album
-    std::string album_id = Spotify::Parse::extractID("https://open.spotify.com/album/1U3qu4gDfohAqFrmpLT11l?si=8ac7b2848a1c4e5e");
+
+    std::string album_id = Spotify::Parse::extractID("https://open.spotify.com/album/2SV07gBGZm6kE8yS5XohLL?si=EL_3A49DTt2ZNX4vtWUbZQ");
     auto single_album = client.album().getAlbum(album_id);
 
 
@@ -23,6 +24,10 @@ int main () {
     std::cout << "Released: " << single_album.release_date << std::endl;
     std::cout << "Track Count: " << single_album.total_tracks << std::endl;
     std::cout << "Album Popularity: " << single_album.popularity << std::endl;
+
+    for (auto& img : single_album.images) {
+        std::cout <<"(" << img.width.value_or(0) << "x" << img.height.value_or(0) << "): " << img.url << std::endl;
+    }
 
     // Multi Album
     std::vector<std::string> album_urls {
