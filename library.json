@@ -1,6 +1,6 @@
 {
   "name": "SpotifyCPP",
-  "version": "0.9.4",
+  "version": "0.9.5",
   "description": "A C++ library for the Spotify WebAPI",
   "keywords": ["embedded", "platformio", "spotify", "api", "spotify-web-api", "spotifycpp", "spotifyc++"],
   "repository": {

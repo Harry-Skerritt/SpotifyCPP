@@ -21,7 +21,10 @@ Built for developers who want a "no-nonsense" interface to Spotify without the o
 
 ---
 
-## Current Version: v0.9.4
+## Current Version: v0.9.5
+
+### v0.9.4 -> v0.9.5
+- Fixed bugs
 
 ### v0.9.3 -> v0.9.4
 - Added `VisualAPI` for interacting with my custom API to get the average album cover colour
