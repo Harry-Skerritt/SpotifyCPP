@@ -21,7 +21,10 @@ Built for developers who want a "no-nonsense" interface to Spotify without the o
 
 ---
 
-## Current Version: v0.9.5
+## Current Version: v0.9.6
+
+### v0.9.5 -> v0.9.6
+- Updated the VisualAPI to include a vibrancy option
 
 ### v0.9.4 -> v0.9.5
 - Fixed bugs

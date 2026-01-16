@@ -16,8 +16,14 @@ namespace Spotify::Extensions {
         static Colour getAverageColour(const Spotify::ImageObject& image);
         static Colour getAverageColour(const std::string& imageUrl);
 
-        static ImagePalette getImagePalette(const Spotify::ImageObject& image);
-        static ImagePalette getImagePalette(const std::string& imageUrl);
+        static AveragePalette getAverageImagePalette(const Spotify::ImageObject& image);
+        static AveragePalette getAverageImagePalette(const std::string& imageUrl);
+
+        static Colour getVibrantColour(const Spotify::ImageObject& image);
+        static Colour getVibrantColour(const std::string& imageUrl);
+
+        static VibrantPalette getVibrantImagePalette(const Spotify::ImageObject& image);
+        static VibrantPalette getVibrantImagePalette(const std::string& imageUrl);
 
     private:
         static Colour parseHex(const std::string& hexStr);

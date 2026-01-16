@@ -12,8 +12,16 @@ namespace Spotify::Extensions {
         [[nodiscard]] inline uint32_t to0x() const;
     };
 
-    struct ImagePalette {
+    struct AveragePalette {
         Colour average;
+        Colour darker_1;
+        Colour darker_2;
+        Colour lighter_1;
+        Colour lighter_2;
+    };
+
+    struct VibrantPalette {
+        Colour vibrant;
         Colour darker_1;
         Colour darker_2;
         Colour lighter_1;
